@@ -1,0 +1,36 @@
+
+
+.psmb-admin .ptabs-wrapper .ptabs-content-container {
+	border: 1px solid #888;
+	border-top: 0;
+	height: auto;
+	padding-top: 100%;
+}
+
+
+@media screen and ( min-width: 768px ) {
+	.psmb-admin .ptabs-wrapper .ptabs-content-container {
+		/*padding-top: 75%;*/
+	}
+}
+
+
+@media screen and ( min-width: 1024px ) {
+	.psmb-admin .ptabs-wrapper .ptabs-content-container {
+		padding-top: 56%;
+	}
+}
+
+
+@media screen and ( min-width: 1500px ) {
+	.psmb-admin .ptabs-wrapper .ptabs-content-container {
+		padding-top: 50%;
+	}
+}
+
+
+@media screen and ( min-width: 2000px ) {
+	.psmb-admin .ptabs-wrapper .ptabs-content-container {
+		padding-top: 40%;
+	}
+}

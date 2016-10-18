@@ -1,0 +1,453 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Premise Social Media Blogger\n"
+"POT-Creation-Date: 2016-07-13 10:49-0500\n"
+"PO-Revision-Date: 2016-07-13 10:50-0500\n"
+"Last-Translator: François Jacquet <info@rosariosis.org>\n"
+"Language-Team: Premise WP <info@premisewp.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.6\n"
+"X-Poedit-Basepath: /var/www/test/premisesplitview/wp-content/plugins/premise-"
+"social-media-publish\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;esc_html_e;esc_attr_e;esc_html__;"
+"esc_attr__\n"
+"X-Poedit-SearchPath-0: /var/www/test/premisesplitview/wp-content/plugins/"
+"premise-social-media-publish\n"
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:333
+msgid "Install Required Plugins"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:334
+msgid "Install Plugins"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:335
+#, php-format
+msgid "Installing Plugin: %s"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:336
+msgid "Something went wrong with the plugin API."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:397
+msgid "Return to Required Plugins Installer"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:398
+msgid "Return to the dashboard"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:399
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3029
+msgid "Plugin activated successfully."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:400
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2832
+msgid "The following plugin was activated successfully:"
+msgid_plural "The following plugins were activated successfully:"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:401
+#, php-format
+msgid "No action taken. Plugin %1$s was already active."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:402
+#, php-format
+msgid ""
+"Plugin not activated. A higher version of %s is needed for this theme. "
+"Please update the plugin."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:403
+#, php-format
+msgid "All plugins installed and activated successfully. %1$s"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:404
+msgid "Dismiss this notice"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:405
+msgid "Please contact the administrator of this site for help."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:520
+msgid "This plugin needs to be updated to be compatible with your theme."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:521
+msgid "Update Required"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:635
+msgid "Set the parent_slug config variable instead."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:828
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3438
+msgid "Return to the Dashboard"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:935
+msgid ""
+"The remote plugin package does not contain a folder with the desired slug "
+"and renaming did not work."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:935
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:938
+msgid ""
+"Please contact the plugin provider and ask them to package their plugin "
+"according to the WordPress guidelines."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:938
+msgid ""
+"The remote plugin package consists of more than one file, but the files are "
+"not packaged in a folder."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2167
+msgid "Required"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2170
+msgid "Recommended"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2186
+msgid "WordPress Repository"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2189
+msgid "External Source"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2192
+msgid "Pre-Packaged"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2209
+msgid "Not Installed"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2213
+msgid "Installed But Not Activated"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2215
+msgid "Active"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2221
+msgid "Required Update not Available"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2224
+msgid "Requires Update"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2227
+msgid "Update recommended"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2283
+#, php-format
+msgid "To Install <span class=\"count\">(%s)</span>"
+msgid_plural "To Install <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2286
+#, php-format
+msgid "Update Available <span class=\"count\">(%s)</span>"
+msgid_plural "Update Available <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2289
+#, php-format
+msgid "To Activate <span class=\"count\">(%s)</span>"
+msgid_plural "To Activate <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2379
+msgid "Installed version:"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2387
+msgid "Minimum required version:"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2399
+msgid "Available version:"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2422
+#, php-format
+msgid ""
+"No plugins to install, update or activate. <a href=\"%1$s\">Return to the "
+"Dashboard</a>"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2436
+msgid "Plugin"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2437
+msgid "Source"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2438
+msgid "Type"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2442
+msgid "Version"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2443
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/logs.php:9
+msgid "Status"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2570
+msgid "Upgrade message from the plugin author:"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2603
+msgid "Install"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2609
+msgid "Update"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2612
+msgid "Activate"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2643
+msgid "No plugins were selected to be installed. No action taken."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2645
+msgid "No plugins were selected to be updated. No action taken."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2681
+msgid "No plugins are available to be installed at this time."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2683
+msgid "No plugins are available to be updated at this time."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2788
+msgid "No plugins were selected to be activated. No action taken."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:2814
+msgid "No plugins are available to be activated at this time."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3028
+msgid "Plugin activation failed."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3362
+#, php-format
+msgid "Updating Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3364
+#, php-format
+msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3365
+#, php-format
+msgid "The installation of %1$s failed."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3369
+msgid ""
+"The installation and activation process is starting. This process may take a "
+"while on some hosts, so please be patient."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3370
+#, php-format
+msgid "%1$s installed and activated successfully."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3370
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3376
+msgid "Show Details"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3370
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3376
+msgid "Hide Details"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3371
+msgid "All installations and activations have been completed."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3372
+#, php-format
+msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3375
+msgid ""
+"The installation process is starting. This process may take a while on some "
+"hosts, so please be patient."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3376
+#, php-format
+msgid "%1$s installed successfully."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3377
+msgid "All installations have been completed."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/TGM-Plugin-Activation/class-tgm-plugin-activation.php:3378
+#, php-format
+msgid "Installing Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/logs.php:6
+msgid "Post ID"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/logs.php:7
+msgid "Account type"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/logs.php:8
+msgid "Published On"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/logs.php:67
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/logs.php:130
+msgid "Success"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/logs.php:210
+msgid "No logs found"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:410
+msgid "App ID"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:417
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:425
+msgid "text"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:429
+msgid ""
+"To find the Facebook user ID, please click on your profile image\n"
+"\t\t\t\t\t\tafter logging in to the Facebook account.\n"
+"\t\t\t\t\t\tNow you can see a link like https://facebook.com/USER_ID"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:438
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:831
+msgid ""
+"{POST_TITLE} - Insert the title of your post. {PERMALINK} -\n"
+"\t\t\t\t\tInsert the URL where your post is displayed. {POST_EXCERPT}\n"
+"\t\t\t\t\t- Insert the excerpt of your post. {POST_CONTENT} - Insert\n"
+"\t\t\t\t\tthe description of your post. {BLOG_TITLE} - Insert the name\n"
+"\t\t\t\t\tof your blog. {USER_NICENAME} - Insert the nicename\n"
+"\t\t\t\t\tof the author."
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:452
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:845
+msgid "--Select--"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:475
+msgid "Posting Method"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:478
+msgid "Simple text message"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:479
+msgid "Text message with image: Upload image to app album"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:480
+msgid "Text message with image: Upload image to timeline album"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:481
+msgid "Text message with attached link: Attach your blog post"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:482
+msgid "Text message with attached link: Share a link to your blog post"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:491
+msgid "Enable Auto Share posts to my Facebook account"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:550
+msgid "Select Facebook pages for auto publish"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:560
+msgid "Save Facebook Settings"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:790
+msgid "Consumer Key (API Key)"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:798
+msgid "Consumer Secret (API Secret)"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:806
+msgid "Twitter username"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:814
+msgid "Access Token"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:822
+msgid "Access Token Secret"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:868
+msgid "Attach image to Twitter post"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:881
+msgid "Enable Auto Share posts to my Twitter account"
+msgstr ""
+
+#: /var/www/test/premisesplitview/wp-content/plugins/premise-social-media-publish/social-media-auto-publish/admin/settings.php:892
+msgid "Save Twitter Settings"
+msgstr ""

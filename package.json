@@ -1,0 +1,14 @@
+{
+  "name": "premise-social-media-blogger",
+  "version": "1.0.0",
+  "description": "Wordpress plugin to automatically create a post when a Youtube video / Instagram photo is added to your channel / account.",
+  "author": "Premise WP",
+  "license": "see LICENSE file",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-autoprefixer": "^3.0.0",
+    "grunt-contrib-cssmin": "^0.12.2",
+    "grunt-contrib-uglify": "^0.8.1",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}

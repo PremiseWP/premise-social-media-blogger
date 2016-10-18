@@ -1,0 +1,66 @@
+/**
+ *
+ */
+
+/**
+ * Youtube Post Type
+ *
+ * Everything must be scoped to '#psmb-single-youtube'
+ */
+
+#psmb-single-youtube .psmb-post-youtube-url {
+	margin: 10px 0;
+	float: right;
+	text-decoration: underline;
+	font-style: italic;
+	font-size: 14px;
+}
+
+#psmb-single-youtube .psmb-post-youtube-content {
+	padding-top: 20px;
+}
+
+
+/**
+ * Instagram Styles
+ */
+
+/* the iframe */
+#psmb-single-instagram .instagram-media {
+	display: block !important;
+	width: 100% !important;
+	max-width: 100% !important;
+	box-shadow: none !important;
+	background: transparent !important;
+	border-radius: 0 !important;
+}
+
+#psmb-single-instagram .psmb-instagram-description {
+	overflow: hidden;
+	height: 0;
+	visibility: hidden;
+}
+
+
+/**
+ * Styles that apply for both
+ */
+
+#psmb-single-youtube .psmb-post-category,
+#psmb-single-youtube .psmb-post-tag,
+/* Instagram */
+#psmb-single-instagram .psmb-post-category,
+#psmb-single-instagram .psmb-post-tag {
+	margin-bottom: 10px;
+}
+
+#psmb-single-youtube .psmb-post-term,
+/* Instagram */
+#psmb-single-instagram .psmb-post-term {
+	display: inline-block;
+	margin-right: 15px;
+}
+
+.psmb-post-content {
+ 	margin: 60px auto !important;
+ }
