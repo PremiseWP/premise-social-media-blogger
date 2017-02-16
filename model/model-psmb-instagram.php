@@ -202,9 +202,17 @@ class Premise_Social_Media_Blogger_Instagram {
 
 		$photo_details['type'] = $photo->type;
 
-		// Username - datetime.
-		$photo_details['title'] = $photo->caption->from->username .
-			' - ' . gmdate( "Y/m/d h:i:s a", $photo->created_time );
+		$first_line = substr( $photo->caption->text, 0, ( strpos( $photo->caption->text, "\n", 0 ) ) - 0 );
+
+		if ( 100 <= strlen( $first_line ) ) {
+			// use frist line as title
+			$photo_details['title'] = $first_line;
+		}
+		else {
+			// Username - datetime.
+			$photo_details['title'] = $photo->caption->from->username .
+				' - ' . gmdate( "Y/m/d h:i:s a", $photo->created_time );
+		}
 
 		$photo_details['url'] = $photo->link;
 
