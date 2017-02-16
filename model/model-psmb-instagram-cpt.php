@@ -88,6 +88,7 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 							'editor',
 							'author',
 							'thumbnail',
+							'post-formats',
 						),
 						// @see https://developer.wordpress.org/resource/dashicons/#format-gallery.
 						'menu_icon' => 'dashicons-format-gallery',

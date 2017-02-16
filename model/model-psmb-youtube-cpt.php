@@ -109,6 +109,7 @@ class Premise_Social_Media_Blogger_Youtube_CPT {
 							'editor',
 							'author',
 							'thumbnail',
+							'post-formats',
 						),
 						// @see https://developer.wordpress.org/resource/dashicons/#video-alt3.
 						'menu_icon' => 'dashicons-video-alt3',
@@ -269,7 +270,7 @@ class Premise_Social_Media_Blogger_Youtube_CPT {
 	static function youtube_page_template( $template ) {
 
 		global $post;
-		
+
 		if ( preg_match( '/^psmb_youtube_/', $post->post_type ) ) {
 
 			// Is template overridden in theme?
