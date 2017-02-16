@@ -289,6 +289,15 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 			$select_attr
 		);
 
+		pwp_field( array(
+			'type' => 'number',
+			'name' => 'psmb_instagram[options][title_max_len]',
+			'default' => '100',
+			'max' => '250',
+			'label' => 'Max length for post titles',
+			'tooltip' => 'The plugin uses the first line of your post to set the post title. If the first line is longer than this number, then the plugin will set the title based on Username and Date of your post. For SEO purposes, this helps keep things consistent with the way you use instagram.',
+		) );
+
 		if ( ! $account['old_photos_imported'] ) {
 			$import_url = '?page=psmb_settings&psmb_import_instagram_account';
 

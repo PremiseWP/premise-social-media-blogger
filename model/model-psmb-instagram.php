@@ -202,9 +202,12 @@ class Premise_Social_Media_Blogger_Instagram {
 
 		$photo_details['type'] = $photo->type;
 
-		$first_line = substr( $photo->caption->text, 0, ( strpos( $photo->caption->text, "\n", 0 ) ) - 0 );
+		$first_line    = substr( $photo->caption->text, 0, ( strpos( $photo->caption->text, "\n", 0 ) ) - 0 );
+		$title_max_len = ( premise_get_value( 'psmb_instagram[options][title_max_len]' ) )
+			? (int) premise_get_value( 'psmb_instagram[options][title_max_len]' )
+			: 100;
 
-		if ( 100 <= strlen( $first_line ) ) {
+		if ( $title_max_len >= strlen( $first_line ) ) {
 			// use frist line as title
 			$photo_details['title'] = $first_line;
 		}
