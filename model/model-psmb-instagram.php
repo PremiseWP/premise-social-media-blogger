@@ -232,6 +232,10 @@ class Premise_Social_Media_Blogger_Instagram {
 		if ( $photo->type === 'video' ) {
 
 			$photo_details['thumbnail'] = $photo->images->low_resolution->url;
+
+			$photo_details['description'] = $photo->videos->standard_resolution->url . "\n\r" . $photo_details['description'];
+
+			// error_log( json_encode( $photo ) );
 		}
 
 		$photo_details['tags'] = $photo->tags;
