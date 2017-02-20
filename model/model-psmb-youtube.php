@@ -258,8 +258,6 @@ class Premise_Social_Media_Blogger_Youtube {
 			'embed_code' => '',
 		);
 
-		error_log( var_dump( $video ) );
-
 		$video_snippet = $video->getSnippet();
 
 		$video_details['id'] = $video['id'];
