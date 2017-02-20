@@ -96,15 +96,16 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 		<?php
 
 		$reindex = 0;
+		 if ( isset( $youtube_options['channels'] ) ) {
+			foreach ( (array) $youtube_options['channels']['ids'] as $index => $channel_id ) {
 
-		foreach ( (array) $youtube_options['channels']['ids'] as $index => $channel_id ) {
+				if ( ! $channel_id ) {
 
-			if ( ! $channel_id ) {
+					continue;
+				}
 
-				continue;
+				$this->youtube_channel_settings( $reindex++, $channel_id );
 			}
-
-			$this->youtube_channel_settings( $reindex++, $channel_id );
 		}
 
 		// New Channel.
@@ -121,13 +122,15 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 
 		$youtube_options = $this->options['psmb_youtube'];
 
-		// Save our cpt_instance_ids too when saving channel IDs!
-		foreach ( (array) $youtube_options['cpt_instance_ids'] as $option_index => $option_value ) : ?>
-			<input type="hidden"
-				name="psmb_youtube[cpt_instance_ids][<?php esc_attr_e( $option_index ); ?>]"
-				value="<?php esc_attr_e( $option_value ); ?>" />
-		<?php
-		endforeach;
+		if ( isset( $youtube_options['cpt_instance_ids'] ) ) {
+			// Save our cpt_instance_ids too when saving channel IDs!
+			foreach ( (array) $youtube_options['cpt_instance_ids'] as $option_index => $option_value ) : ?>
+				<input type="hidden"
+					name="psmb_youtube[cpt_instance_ids][<?php esc_attr_e( $option_index ); ?>]"
+					value="<?php esc_attr_e( $option_value ); ?>" />
+			<?php
+			endforeach;
+		}
 	}
 
 
