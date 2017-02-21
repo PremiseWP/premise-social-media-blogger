@@ -486,6 +486,7 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 	private function select_default_post_format( $account ) {
 
 		$format_options = array(
+			__( 'Standard' ) => '',
 			__( 'Aside' ) => 'aside',
 			__( 'Gallery' ) => 'gallery',
 			__( 'Link' ) => 'link',

@@ -468,6 +468,7 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 	private function select_default_post_format( $channel ) {
 
 		$format_options = array(
+			__( 'Standard' ) => '',
 			__( 'Aside' ) => 'aside',
 			__( 'Gallery' ) => 'gallery',
 			__( 'Link' ) => 'link',
