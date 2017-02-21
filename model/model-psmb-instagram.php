@@ -208,13 +208,12 @@ class Premise_Social_Media_Blogger_Instagram {
 			: 100;
 
 		if ( $title_max_len >= strlen( $first_line ) ) {
-			// use frist line as title
+			// Use first line as title.
 			$photo_details['title'] = $first_line;
-		}
-		else {
+		} else {
 			// Username - datetime.
 			$photo_details['title'] = $photo->caption->from->username .
-				' - ' . gmdate( "Y/m/d h:i:s a", $photo->created_time );
+				' - ' . gmdate( 'Y/m/d h:i:s a', $photo->created_time );
 		}
 
 		$photo_details['url'] = $photo->link;

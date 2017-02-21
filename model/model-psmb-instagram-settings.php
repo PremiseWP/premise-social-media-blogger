@@ -228,6 +228,8 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 				'title' => $account_details['title'],
 				'account_id' => $account_details['account_id'],
 				'post_type' => 'psmb_instagram',
+				'category_id' => '',
+				'post_format' => 'aside',
 			);
 
 			// Update options.
@@ -297,6 +299,12 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 			'label' => 'Max length for post titles',
 			'tooltip' => 'The plugin uses the first line of your post to set the post title. If the first line is longer than this number, then the plugin will set the title based on Username and Date of your post. For SEO purposes, this helps keep things consistent with the way you use instagram.',
 		) );
+
+		// Select default category.
+		$this->select_default_category( $account );
+
+		// Select default post format.
+		$this->select_default_post_format( $account );
 
 		if ( ! $account['old_photos_imported'] ) {
 			$import_url = '?page=psmb_settings&psmb_import_instagram_account';
@@ -429,4 +437,76 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 
 		return false;
 	}
-}
+
+
+	/**
+	 * Select default category
+	 * for each account.
+	 *
+	 * @param  array $account Account details.
+	 */
+	private function select_default_category( $account ) {
+
+		$category_taxonomy = 'category';
+
+		if ( 'post' !== $account['post_type'] ) {
+
+			$category_taxonomy = 'psmb_instagram-category';
+		}
+
+		$category_options = array( __( 'No category', 'psmb' ) => '' );
+
+		$category_terms = get_terms( $category_taxonomy, array( 'hide_empty' => false ) );
+
+		foreach ( (array) $category_terms as $category_term ) {
+
+			$category_options[ $category_term->name ] = $category_term->term_id;
+		}
+
+		// Select Category from already created categories, to override Photo category.
+		$select_attr = array(
+			'name'    => 'psmb_instagram[account][category_id]',
+			'label'   => __( 'Category', 'psmb' ),
+			'class'   => 'span12',
+			'options' => $category_options,
+		);
+
+		premise_field(
+			'select',
+			$select_attr
+		);
+	}
+
+
+	/**
+	 * Select default post format
+	 *
+	 * @param  array $account Account details.
+	 */
+	private function select_default_post_format( $account ) {
+
+		$format_options = array(
+			__( 'Aside' ) => 'aside',
+			__( 'Gallery' ) => 'gallery',
+			__( 'Link' ) => 'link',
+			__( 'Image' ) => 'image',
+			__( 'Quote' ) => 'quote',
+			__( 'Status' ) => 'status',
+			__( 'Video' ) => 'video',
+			__( 'Audio' ) => 'audio',
+			__( 'Chat' ) => 'chat',
+		);
+
+		// Select Post Format.
+		$select_attr = array(
+			'name'    => 'psmb_instagram[account][post_format]',
+			'label'   => __( 'Post Format', 'psmb' ),
+			'class'   => 'span12',
+			'options' => $format_options,
+		);
+
+		premise_field(
+			'select',
+			$select_attr
+		);
+	}}

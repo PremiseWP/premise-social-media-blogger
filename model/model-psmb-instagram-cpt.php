@@ -294,8 +294,19 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 			$post_type = 'psmb_instagram';
 		}
 
-		// Regular Post: only description.
-		$content = $photo_details['description'];
+		// Build our content.
+		if ( 'post' === $post_type ) {
+
+			// Regular Post: only description.
+			$content = $photo_details['description'];
+
+		} else {
+
+			// CPT: embed Instagram + hidden description for SEO.
+			$content = $photo_details['url'] . "\r\n" .
+				'<div class="psmb-instagram-description" style="visibility:hidden;">' .
+					$photo_details['description'] . '</div>';
+		}
 
 		// Add Instagram video URL (in place of description) to post content for automatic embedding.
 		// Insert new Instagram post.
@@ -318,7 +329,10 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 
 		} else {
 
-			set_post_format( $instagram_id, 'aside' );
+			// Get post format.
+			$post_format = premise_get_option( 'psmb_instagram[account][post_format]' );
+
+			set_post_format( $instagram_id, $post_format );
 
 			$tags_taxonomy = 'psmb_instagram-tag';
 
@@ -347,7 +361,15 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 
 			wp_set_post_terms( $instagram_id, $photo_details['tags'], $tags_taxonomy );
 
-			// wp_set_post_terms( $instagram_id, $photo_details['category'], $category_taxonomy );
+			$account_category_id = premise_get_option( 'psmb_instagram[account][category_id]' );
+
+			// Default Category?
+			if ( $account_category_id ) {
+
+				$photo_details['category'] = array( (int) $account_category_id );
+
+				wp_set_post_terms( $instagram_id, $photo_details['category'], $category_taxonomy );
+			}
 
 			psmb_generate_featured_image( $photo_details['thumbnail'], $instagram_id );
 		}

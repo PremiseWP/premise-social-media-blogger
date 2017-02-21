@@ -96,7 +96,8 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 		<?php
 
 		$reindex = 0;
-		 if ( isset( $youtube_options['channels'] ) ) {
+
+		if ( isset( $youtube_options['channels'] ) ) {
 			foreach ( (array) $youtube_options['channels']['ids'] as $index => $channel_id ) {
 
 				if ( ! $channel_id ) {
@@ -213,6 +214,8 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 				'cpt_instance_id' => (string) $new_cpt_instance_id,
 				'title' => $channel_details['title'],
 				'post_type' => 'psmb_youtube',
+				'category_id' => '',
+				'post_format' => 'video',
 			);
 
 			// Update options.
@@ -272,6 +275,12 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 			'select',
 			$select_attr
 		);
+
+		// Select default category for each channel.
+		$this->select_default_category( $channel );
+
+		// Select default post format for each channel.
+		$this->select_default_post_format( $channel );
 
 		if ( ! $channel['old_videos_imported'] ) {
 			$import_url = '?page=psmb_settings&psmb_import_youtube_channel=' .
@@ -408,5 +417,79 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 		$this->options['psmb_youtube'] = $youtube_options;
 
 		return false;
+	}
+
+
+	/**
+	 * Select default category
+	 * for each channel.
+	 *
+	 * @param  array $channel Channel details.
+	 */
+	private function select_default_category( $channel ) {
+
+		$category_taxonomy = 'category';
+
+		if ( 'post' !== $channel['post_type'] ) {
+
+			$category_taxonomy = 'psmb_youtube_' . $channel['cpt_instance_id'] . '-category';
+		}
+
+		$category_options = array( __( 'YouTube category', 'psmb' ) => '' );
+
+		$category_terms = get_terms( $category_taxonomy, array( 'hide_empty' => false ) );
+
+		foreach ( (array) $category_terms as $category_term ) {
+
+			$category_options[ $category_term->name ] = $category_term->term_id;
+		}
+
+		// Select Category from already created categories, to override Video category.
+		$select_attr = array(
+			'name'    => 'psmb_youtube[channels][' . $channel['cpt_instance_id'] . '][category_id]',
+			'label'   => __( 'Category', 'psmb' ),
+			'class'   => 'span12',
+			'options' => $category_options,
+		);
+
+		premise_field(
+			'select',
+			$select_attr
+		);
+	}
+
+
+	/**
+	 * Select default post format
+	 * for each channel.
+	 *
+	 * @param  array $channel Channel details.
+	 */
+	private function select_default_post_format( $channel ) {
+
+		$format_options = array(
+			__( 'Aside' ) => 'aside',
+			__( 'Gallery' ) => 'gallery',
+			__( 'Link' ) => 'link',
+			__( 'Image' ) => 'image',
+			__( 'Quote' ) => 'quote',
+			__( 'Status' ) => 'status',
+			__( 'Video' ) => 'video',
+			__( 'Audio' ) => 'audio',
+			__( 'Chat' ) => 'chat',
+		);
+
+		// Select Post Format.
+		$select_attr = array(
+			'name'    => 'psmb_youtube[channels][' . $channel['cpt_instance_id'] . '][post_format]',
+			'label'   => __( 'Post Format', 'psmb' ),
+			'class'   => 'span12',
+			'options' => $format_options,
+		);
+
+		premise_field(
+			'select',
+			$select_attr
+		);
 	}
 }

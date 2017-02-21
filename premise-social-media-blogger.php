@@ -366,23 +366,6 @@ class Premise_Social_Media_Blogger {
 			);
 		}
 
-		if ( ! class_exists( 'Load_Premise_Tabs' ) ) {
-			$plugins[] = array(
-				'name'             => 'Premise-Tabs',
-				'slug'             => 'Premise-tabs',
-				'source'           => 'https://github.com/PremiseWP/premise-tabs/archive/master.zip',
-				'required'         => true,
-				// 'version'          => '1.4.8',
-				'force_activation' => false,
-			);
-			// TODO Require Premise Tabs from Wordpress Plugins Directory so we can handle versions well
-			// $plugins[] = array(
-			// 	'name'               => 'Premise Tabs',
-			// 	'slug'               => 'premise-tabs',
-			// 	'required'           => true,
-			// );
-		}
-
 		if ( ! empty( $plugins ) ) {
 
 			// Set our config settings.

@@ -61,7 +61,7 @@
 			),
 		);
 
-		new Premise_Tabs( $tabs );
+		new Premise_Tabs( $tabs, 'wp-theme-options' );
 	?>
 	</form>
 </div>

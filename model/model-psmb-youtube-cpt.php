@@ -332,7 +332,10 @@ class Premise_Social_Media_Blogger_Youtube_CPT {
 
 		} else {
 
-			set_post_format( $youtube_id, 'video' );
+			// Get channel post format.
+			$post_format = premise_get_option( 'psmb_youtube[channels][' . $this->instance_id . '][post_format]' );
+
+			set_post_format( $youtube_id, $post_format );
 
 			$tags_taxonomy = 'psmb_youtube_' . $this->instance_id . '-tag';
 
@@ -356,6 +359,14 @@ class Premise_Social_Media_Blogger_Youtube_CPT {
 				}
 
 				$video_details['category'] = array( (int) $term_id );
+			}
+
+			$channel_category_id = premise_get_option( 'psmb_youtube[channels][' . $this->instance_id . '][category_id]' );
+
+			// Override Video Category?
+			if ( $channel_category_id ) {
+
+				$video_details['category'] = array( (int) $channel_category_id );
 			}
 
 			wp_set_post_terms( $youtube_id, $video_details['tags'], $tags_taxonomy );
