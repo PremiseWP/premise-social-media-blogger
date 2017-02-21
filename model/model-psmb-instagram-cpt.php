@@ -294,19 +294,8 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 			$post_type = 'psmb_instagram';
 		}
 
-		// Build our content.
-		if ( 'post' === $post_type ) {
-
-			// Regular Post: only description.
-			$content = $photo_details['description'];
-
-		} else {
-
-			// CPT: embed Instagram + hidden description for SEO.
-			$content = $photo_details['url'] . "\r\n" .
-				'<div class="psmb-instagram-description" style="visibility:hidden;">' .
-					$photo_details['description'] . '</div>';
-		}
+		// Regular Post: only description.
+		$content = $photo_details['description'];
 
 		// Add Instagram video URL (in place of description) to post content for automatic embedding.
 		// Insert new Instagram post.
