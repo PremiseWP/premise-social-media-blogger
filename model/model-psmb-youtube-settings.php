@@ -115,9 +115,9 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 			array(
 				'name'    => 'psmb_youtube[playlists][ids][' . $reindex . ']',
 				'label'   => __( 'New YouTube playlist ID', 'psmb' ),
-				'placeholder' => 'UC70gZSTkSeqn61TJkpOm3bQ',
+				'placeholder' => 'PLspxhVrUtmnzdH5yFonnliJ44kLOZJyRz',
 				'class'   => 'span12',
-				'tooltip' => __( 'The ID is the last part of the playlist URL, right after "playlist/"', 'psmb' ),
+				'tooltip' => __( 'The ID is the last part of the playlist URL, right after "list="', 'psmb' ),
 			)
 		);
 
@@ -138,7 +138,7 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 	/**
 	 * YouTube Playlist settings
 	 *
-	 * @param int    $index      YouTube Playlist 'ids' index.
+	 * @param int    $index       YouTube Playlist 'ids' index.
 	 * @param string $playlist_id YouTube Playlist ID.
 	 *
 	 * Outputs the YouTube Playlist options
@@ -163,7 +163,7 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 				'label'   => __( 'YouTube playlist ID', 'psmb' ),
 				'placeholder' => 'UC70gZSTkSeqn61TJkpOm3bQ',
 				'class'   => 'span12',
-				'tooltip' => __( 'The ID is the last part of the playlist URL, right after "playlist/"', 'psmb' ),
+				'tooltip' => __( 'The ID is the last part of the playlist URL, right after "list="', 'psmb' ),
 			)
 		);
 
@@ -182,7 +182,7 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 
 		if ( ! isset( $youtube_options['playlists'][ $playlist_id ] ) ) {
 
-			$video_ids = $youtube_client->get_playlist_video_ids( $playlist_details['playlist_id'], 50 );
+			$video_ids = $youtube_client->get_playlist_video_ids( $playlist_details['id'], 50 );
 
 			$new_cpt_instance_id = 0;
 
@@ -295,11 +295,8 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 			<a href="<?php echo esc_url( $playlist_details['url'] ); ?>" target="_blank">
 				<?php esc_html_e( $playlist_details['title'] ); ?>
 			</a>
-			<?php if ( $playlist_details['description'] ) : ?>:
-				<?php esc_html_e( $playlist_details['description'] ); ?>
-			<?php endif; ?>
 			<br />
-			<?php esc_html_e( sprintf( __( 'Number of owned videos: %d', 'psmb' ), count( $video_ids ) ) ); ?>
+			<?php esc_html_e( sprintf( __( 'Number of videos: %d', 'psmb' ), count( $video_ids ) ) ); ?>
 			<?php if ( $playlist['imported_video_ids'] ) : ?>
 				, <?php esc_html_e( sprintf(
 					__( 'Imported: %d', 'psmb' ),
@@ -308,7 +305,7 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 			<?php endif; ?>
 			<?php if ( ! $playlist['old_videos_imported']
 				&& $old_videos_number ) : ?>
-				<a href="<?php echo esc_url( $import_url ); ?>" class="primary"style="float: right;"
+				<a href="<?php echo esc_url( $import_url ); ?>" class="primary" style="float: right;"
 					onclick="document.getElementById('import-youtube-spinner').className += ' is-active';">
 					<span class="spinner" id="import-youtube-spinner"></span>
 					<?php echo esc_html( sprintf(
@@ -368,7 +365,7 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 
 		$playlist_details = $youtube_client->get_playlist_details( $playlists[0] );
 
-		$video_ids = $youtube_client->get_playlist_video_ids( $playlist_details['playlist_id'], 50 );
+		$video_ids = $youtube_client->get_playlist_video_ids( $playlist_details['id'], 50 );
 
 		$import_video_ids = $imported_video_ids = $video_ids;
 

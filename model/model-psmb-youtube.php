@@ -121,11 +121,8 @@ class Premise_Social_Media_Blogger_Youtube {
 		$playlist_details = array(
 			'id' => '',
 			'title' => '',
-			'url' => 'https://www.youtube.com/playlist/',
-			'description' => '',
-			'playlist_id' => '',
+			'url' => 'https://www.youtube.com/playlist?list=',
 		);
-		$playlist_id = 0;
 
 		// var_dump( $playlist->getContentDetails(), $playlist->getSnippet() );
 
@@ -136,10 +133,6 @@ class Premise_Social_Media_Blogger_Youtube {
 		$playlist_details['title'] = $playlist_snippet['title'];
 
 		$playlist_details['url'] .= $playlist['id'];
-
-		$playlist_details['description'] = $playlist_snippet['description'];
-
-		$playlist_details['playlist_id'] = $playlist->getContentDetails()->getRelatedPlaylists()->getUploads();
 
 		return $playlist_details;
 	}

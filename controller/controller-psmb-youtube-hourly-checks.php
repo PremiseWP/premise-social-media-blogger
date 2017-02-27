@@ -48,7 +48,7 @@ foreach ( (array) $youtube_playlists['ids'] as $playlist_id ) {
 
 	$playlist_details = $youtube_client->get_playlist_details( $playlists[0] );
 
-	$import_video_ids = $youtube_client->get_playlist_video_ids( $playlist_details['playlist_id'] );
+	$import_video_ids = $youtube_client->get_playlist_video_ids( $playlist_details['id'] );
 
 	if ( ! $import_video_ids ) {
 
