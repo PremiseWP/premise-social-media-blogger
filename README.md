@@ -8,4 +8,8 @@ PHP curl extension.
 
 # Changelog
 
+## v1.1
+- Switch from YouTube Channel ID to YouTube Playlist ID.
+**Version 1.1 is not compatible with v1.0 (any YouTube Custom Post Types (channels) will be lost).**
+
 ## v1.0
