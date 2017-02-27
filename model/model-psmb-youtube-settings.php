@@ -335,6 +335,8 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 	 */
 	private function import_old_youtube_videos( $playlist_id ) {
 
+		set_time_limit( 100 );
+
 		$youtube_options = $this->options['psmb_youtube'];
 
 		if ( ! isset( $youtube_options['playlists'][ $playlist_id ] ) ) {
