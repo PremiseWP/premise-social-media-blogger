@@ -1,7 +1,7 @@
 <?php
 /**
  * Youtube Hourly Checks Controller
- * Proceed to check the Channels for new items & post them.
+ * Proceed to check the Playlists for new items & post them.
  *
  * @package Premise Social Media Blogger
  */
@@ -21,34 +21,34 @@ require_once PSMB_PATH . 'model/model-psmb-youtube.php';
  *
  * @see  Premise_Social_Media_Blogger_Youtube_CPT class
  */
-// Proceed to check the YouTube Channels for new videos & post them.
+// Proceed to check the YouTube Playlists for new videos & post them.
 $youtube_options = premise_get_option( 'psmb_youtube' );
 
 $youtube_client = new Premise_Social_Media_Blogger_Youtube( $youtube_options['developer_key'] );
 
-// Get saved channels.
-$youtube_channels = $youtube_options['channels'];
+// Get saved playlists.
+$youtube_playlists = $youtube_options['playlists'];
 
-foreach ( (array) $youtube_channels['ids'] as $channel_id ) {
+foreach ( (array) $youtube_playlists['ids'] as $playlist_id ) {
 
-	if ( ! isset( $youtube_channels[ $channel_id ] ) ) {
+	if ( ! isset( $youtube_playlists[ $playlist_id ] ) ) {
 
 		continue;
 	}
 
-	$channel = $youtube_channels[ $channel_id ];
+	$playlist = $youtube_playlists[ $playlist_id ];
 
 	// Get YouTube video ids.
-	$channels = $youtube_client->get_channel( $channel_id );
+	$playlists = $youtube_client->get_playlist( $playlist_id );
 
-	if ( ! $channels ) {
+	if ( ! $playlists ) {
 
 		continue;
 	}
 
-	$channel_details = $youtube_client->get_channel_details( $channels[0] );
+	$playlist_details = $youtube_client->get_playlist_details( $playlists[0] );
 
-	$import_video_ids = $youtube_client->get_playlist_video_ids( $channel_details['playlist_id'] );
+	$import_video_ids = $youtube_client->get_playlist_video_ids( $playlist_details['playlist_id'] );
 
 	if ( ! $import_video_ids ) {
 
@@ -57,24 +57,24 @@ foreach ( (array) $youtube_channels['ids'] as $channel_id ) {
 
 	$imported_video_ids = $import_video_ids;
 
-	if ( $channel['imported_video_ids'] ) {
+	if ( $playlist['imported_video_ids'] ) {
 
 		// Eliminate already imported videos!
-		$import_video_ids = array_diff( $import_video_ids, $channel['imported_video_ids'] );
+		$import_video_ids = array_diff( $import_video_ids, $playlist['imported_video_ids'] );
 
 		// Add videos to imported array.
-		$imported_video_ids = array_merge( $channel['imported_video_ids'], $import_video_ids );
+		$imported_video_ids = array_merge( $playlist['imported_video_ids'], $import_video_ids );
 	}
 
 	// Eliminate old videos!
-	$import_video_ids = array_diff( $import_video_ids, $channel['video_ids'] );
+	$import_video_ids = array_diff( $import_video_ids, $playlist['video_ids'] );
 
 	if ( ! $import_video_ids ) {
 
 		continue;
 	}
 
-	$youtube_cpt = Premise_Social_Media_Blogger_Youtube_CPT::get_instance( $channel['cpt_instance_id'], $channel['title'] );
+	$youtube_cpt = Premise_Social_Media_Blogger_Youtube_CPT::get_instance( $playlist['cpt_instance_id'], $playlist['title'] );
 
 	$videos = $youtube_client->get_videos( $import_video_ids );
 
@@ -84,9 +84,9 @@ foreach ( (array) $youtube_channels['ids'] as $channel_id ) {
 
 		$post_type = 'post';
 
-		if ( 'psmb_youtube' === $channel['post_type'] ) {
+		if ( 'psmb_youtube' === $playlist['post_type'] ) {
 
-			$post_type = 'psmb_youtube_' . $channel['cpt_instance_id'];
+			$post_type = 'psmb_youtube_' . $playlist['cpt_instance_id'];
 		}
 
 		// Insert YouTube post.
@@ -100,9 +100,9 @@ foreach ( (array) $youtube_channels['ids'] as $channel_id ) {
 	$youtube_options_updated = $youtube_options;
 
 	// Save video IDs!
-	$youtube_options_updated['channels'][ $channel_id ]['imported_video_ids'] = $imported_video_ids;
+	$youtube_options_updated['playlists'][ $playlist_id ]['imported_video_ids'] = $imported_video_ids;
 
-	$youtube_options_updated['channels'][ $channel_id ]['video_ids'] = array_merge( $channel['video_ids'], $import_video_ids );
+	$youtube_options_updated['playlists'][ $playlist_id ]['video_ids'] = array_merge( $playlist['video_ids'], $import_video_ids );
 
 	update_option( 'psmb_youtube', $youtube_options_updated );
 }

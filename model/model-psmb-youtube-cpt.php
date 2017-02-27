@@ -43,11 +43,11 @@ class Premise_Social_Media_Blogger_Youtube_CPT {
 	 * Gets or create a new instance.
 	 *
 	 * @param int    $instance_id   Instance ID.
-	 * @param string $channel_title Channel name.
+	 * @param string $playlist_title Playlist name.
 	 *
 	 * @return object
 	 */
-	public static function get_instance( $instance_id, $channel_title = '' ) {
+	public static function get_instance( $instance_id, $playlist_title = '' ) {
 
 		// Check if instance alreay created.
 		if ( isset( self::$instances[ (int) $instance_id ] )
@@ -56,7 +56,7 @@ class Premise_Social_Media_Blogger_Youtube_CPT {
 			return self::$instances[ (int) $instance_id ];
 		}
 
-		self::$instances[ (int) $instance_id ] = new self( $instance_id, $channel_title );
+		self::$instances[ (int) $instance_id ] = new self( $instance_id, $playlist_title );
 
 		return self::$instances[ (int) $instance_id ];
 	}
@@ -69,9 +69,9 @@ class Premise_Social_Media_Blogger_Youtube_CPT {
 	 * Save meta box (@see do_save)
 	 *
 	 * @param int    $instance_id   Instance ID (for multiple Youtube Videos CPTs!).
-	 * @param string $channel_title Channel name.
+	 * @param string $playlist_title Playlist name.
 	 */
-	public function __construct( $instance_id, $channel_title, $post_type = '' ) {
+	public function __construct( $instance_id, $playlist_title, $post_type = '' ) {
 
 		$this->instance_id = $instance_id;
 
@@ -79,9 +79,9 @@ class Premise_Social_Media_Blogger_Youtube_CPT {
 
 			$this->post_type[0] .= $this->instance_id;
 
-			if ( ! $channel_title ) {
+			if ( ! $playlist_title ) {
 
-				$channel_title = 'YouTube';
+				$playlist_title = 'YouTube';
 			}
 
 			if ( class_exists( 'PremiseCPT' ) ) {
@@ -98,8 +98,8 @@ class Premise_Social_Media_Blogger_Youtube_CPT {
 				 */
 				$yt_cpt = new PremiseCPT(
 					array(
-						'plural' => sprintf( __( '%s Videos', 'psmb' ), $channel_title ),
-						'singular' => sprintf( __( '%s Video', 'psmb' ), $channel_title ),
+						'plural' => sprintf( __( '%s Videos', 'psmb' ), $playlist_title ),
+						'singular' => sprintf( __( '%s Video', 'psmb' ), $playlist_title ),
 						'post_type_name' => 'psmb_youtube_' . $this->instance_id,
 						'slug' => 'psmb-youtube-' . $this->instance_id,
 					),
@@ -332,8 +332,8 @@ class Premise_Social_Media_Blogger_Youtube_CPT {
 
 		} else {
 
-			// Get channel post format.
-			$post_format = premise_get_option( 'psmb_youtube[channels][' . $this->instance_id . '][post_format]' );
+			// Get playlist post format.
+			$post_format = premise_get_option( 'psmb_youtube[playlists][' . $this->instance_id . '][post_format]' );
 
 			set_post_format( $youtube_id, $post_format );
 
@@ -361,12 +361,12 @@ class Premise_Social_Media_Blogger_Youtube_CPT {
 				$video_details['category'] = array( (int) $term_id );
 			}
 
-			$channel_category_id = premise_get_option( 'psmb_youtube[channels][' . $this->instance_id . '][category_id]' );
+			$playlist_category_id = premise_get_option( 'psmb_youtube[playlists][' . $this->instance_id . '][category_id]' );
 
 			// Override Video Category?
-			if ( $channel_category_id ) {
+			if ( $playlist_category_id ) {
 
-				$video_details['category'] = array( (int) $channel_category_id );
+				$video_details['category'] = array( (int) $playlist_category_id );
 			}
 
 			wp_set_post_terms( $youtube_id, $video_details['tags'], $tags_taxonomy );

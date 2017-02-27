@@ -65,7 +65,7 @@ class Premise_Social_Media_Blogger_Settings {
 
 		$this->defaults = array(
 			'psmb_youtube' => array(
-				'channels' => array(),
+				'playlists' => array(),
 				'cpt_instance_ids' => array(),
 				'developer_key' => '',
 			),
@@ -81,11 +81,11 @@ class Premise_Social_Media_Blogger_Settings {
 
 		if ( ( isset( $_GET['page'] )
 				&& 'psmb_settings' === $_GET['page'] )
-			&& ( isset( $_GET['psmb_import_youtube_channel'] )
+			&& ( isset( $_GET['psmb_import_youtube_playlist'] )
 				|| isset( $_GET['psmb_import_instagram_account'] )
 				|| isset( $_GET['code'] ) ) ) {
 
-			// Remove &psmb_import_youtube_channel from URL!
+			// Remove &psmb_import_youtube_playlist from URL!
 			add_filter( 'removable_query_args', array( $this, 'remove_import_query_arg' ) );
 		}
 
@@ -181,7 +181,7 @@ class Premise_Social_Media_Blogger_Settings {
 
 	/**
 	 * Remove
-	 * &psmb_import_youtube_channel
+	 * &psmb_import_youtube_playlist
 	 * &psmb_import_instagram_account
 	 * &code (Instagram auth)
 	 * from URL!
@@ -190,11 +190,11 @@ class Premise_Social_Media_Blogger_Settings {
 	 *
 	 * @param  array $removable_query_args Removable query args.
 	 *
-	 * @return array Removable query args + psmb_import_youtube_channel + psmb_import_instagram_account + code
+	 * @return array Removable query args + psmb_import_youtube_playlist + psmb_import_instagram_account + code
 	 */
 	public function remove_import_query_arg( $removable_query_args ) {
 
-		$removable_query_args[] = 'psmb_import_youtube_channel';
+		$removable_query_args[] = 'psmb_import_youtube_playlist';
 
 		$removable_query_args[] = 'psmb_import_instagram_account';
 

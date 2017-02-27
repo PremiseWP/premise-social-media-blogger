@@ -1,7 +1,7 @@
 {
   "name": "premise-social-media-blogger",
   "version": "1.0.0",
-  "description": "Wordpress plugin to automatically create a post when a Youtube video / Instagram photo is added to your channel / account.",
+  "description": "Wordpress plugin to automatically create a post when a Youtube video / Instagram photo is added to your playlist / account.",
   "author": "Premise WP",
   "license": "see LICENSE file",
   "devDependencies": {

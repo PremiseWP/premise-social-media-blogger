@@ -67,28 +67,28 @@ class Premise_Social_Media_Blogger_Youtube {
 
 
 	/**
-	 * Get YouTube Channel
+	 * Get YouTube Playlist
 	 *
-	 * @param  string $channel_id Channel ID.
+	 * @param  string $playlist_id Playlist ID.
 	 *
-	 * @return array              YouTube Channels.
+	 * @return array              YouTube Playlists.
 	 */
-	public function get_channel( $channel_id ) {
+	public function get_playlist( $playlist_id ) {
 
-		if ( ! $channel_id ) {
+		if ( ! $playlist_id ) {
 
 			return;
 		}
 
-		$channels = array();
+		$playlists = array();
 
 		try {
 
-			$params = array( 'id' => $channel_id ); // UC70gZSTkSeqn61TJkpOm3bQ.
+			$params = array( 'id' => $playlist_id ); // UC70gZSTkSeqn61TJkpOm3bQ.
 
-			$results = $this->yt_service->channels->listChannels( 'contentDetails,snippet', $params );
+			$results = $this->yt_service->playlists->listPlaylists( 'contentDetails,snippet', $params );
 
-			$channels = $results->getItems();
+			$playlists = $results->getItems();
 
 		} catch ( Google_ServiceException $e ) {
 
@@ -99,49 +99,49 @@ class Premise_Social_Media_Blogger_Youtube {
 			$this->add_error_from_exception( $e, 'client' );
 		}
 
-		return $channels;
+		return $playlists;
 	}
 
 
 	/**
-	 * Get Channel details:
+	 * Get Playlist details:
 	 * id,title,url,description,playlist_id
 	 *
-	 * @param  object $channel Google_Service_YouTube_Channel object.
+	 * @param  object $playlist Google_Service_YouTube_Playlist object.
 	 *
-	 * @return array         Channel details array.
+	 * @return array         Playlist details array.
 	 */
-	public function get_channel_details( $channel ) {
+	public function get_playlist_details( $playlist ) {
 
-		if ( ! $channel instanceof Google_Service_YouTube_Channel ) {
+		if ( ! $playlist instanceof Google_Service_YouTube_Playlist ) {
 
 			return array();
 		}
 
-		$channel_details = array(
+		$playlist_details = array(
 			'id' => '',
 			'title' => '',
-			'url' => 'https://www.youtube.com/channel/',
+			'url' => 'https://www.youtube.com/playlist/',
 			'description' => '',
 			'playlist_id' => '',
 		);
 		$playlist_id = 0;
 
-		// var_dump( $channel->getContentDetails(), $channel->getSnippet() );
+		// var_dump( $playlist->getContentDetails(), $playlist->getSnippet() );
 
-		$channel_snippet = $channel->getSnippet();
+		$playlist_snippet = $playlist->getSnippet();
 
-		$channel_details['id'] = $channel['id'];
+		$playlist_details['id'] = $playlist['id'];
 
-		$channel_details['title'] = $channel_snippet['title'];
+		$playlist_details['title'] = $playlist_snippet['title'];
 
-		$channel_details['url'] .= $channel['id'];
+		$playlist_details['url'] .= $playlist['id'];
 
-		$channel_details['description'] = $channel_snippet['description'];
+		$playlist_details['description'] = $playlist_snippet['description'];
 
-		$channel_details['playlist_id'] = $channel->getContentDetails()->getRelatedPlaylists()->getUploads();
+		$playlist_details['playlist_id'] = $playlist->getContentDetails()->getRelatedPlaylists()->getUploads();
 
-		return $channel_details;
+		return $playlist_details;
 	}
 
 
