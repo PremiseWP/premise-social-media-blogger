@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Premise Social Media Blogger
- * Description: Automatically creates a post on your site when you upload a video on your YouTube channel or a post on your Instagram account. Posts are created with description, categories (youtube), tags, date, and of course image or video. You can then add more content or rearrange to your liking. Easy to setup, with full detailed instructions included. Let us know your thoughts on Twitter <a href="https://twitter.com/premisewp" target="_blank">@premisewp</a> and if you need help use hashtag <code>#PremiseSupport</code>, we'll come to the rescue.
+ * Description: Automatically creates a post on your site when you upload a video on your YouTube playlist or a post on your Instagram account. Posts are created with description, categories (youtube), tags, date, and of course image or video. You can then add more content or rearrange to your liking. Easy to setup, with full detailed instructions included. Let us know your thoughts on Twitter <a href="https://twitter.com/premisewp" target="_blank">@premisewp</a> and if you need help use hashtag <code>#PremiseSupport</code>, we'll come to the rescue.
  * Plugin URI:
  * Version:     1.0.0
  * Author:      Premise WP (@premisewp)
@@ -317,7 +317,7 @@ class Premise_Social_Media_Blogger {
 	 */
 	public function hourly_checks() {
 
-		// Proceed to check the Channels for new items & post them.
+		// Proceed to check the Playlists for new items & post them.
 		require_once PSMB_PATH . 'controller/controller-psmb-youtube-hourly-checks.php';
 
 		// Proceed to check the Account for new items & post them.

@@ -37,12 +37,12 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 
 		$get_vars = wp_unslash( $_GET );
 
-		if ( isset( $get_vars['psmb_import_youtube_channel'] ) ) {
+		if ( isset( $get_vars['psmb_import_youtube_playlist'] ) ) {
 
-			$channel_id = $get_vars['psmb_import_youtube_channel'];
+			$playlist_id = $get_vars['psmb_import_youtube_playlist'];
 
 			// Import old videos.
-			$import_errors = $this->import_old_youtube_videos( $channel_id );
+			$import_errors = $this->import_old_youtube_videos( $playlist_id );
 
 			if ( $import_errors ) {
 
@@ -55,7 +55,7 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 				esc_html_e( $this->notification(
 					sprintf(
 						__( 'The old videos were successfully imported. Check the %s for new entries!', 'psmb' ),
-						( 'post' === $youtube_options['channels'][ $channel_id ]['post_type'] ?
+						( 'post' === $youtube_options['playlists'][ $playlist_id ]['post_type'] ?
 							__( 'Posts', 'psmb' ) :
 							__( 'YouTube Videos', 'psmb' ) )
 					),
@@ -90,41 +90,41 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 
 		?>
 		<p>
-			<?php esc_html_e( 'Your YouTube channels will be periodically checked for new videos.
+			<?php esc_html_e( 'Your YouTube playlists will be periodically checked for new videos.
 				New videos will be automatically blogged (see options below).', 'psmb' ); ?>
 		</p>
 		<?php
 
 		$reindex = 0;
 
-		if ( isset( $youtube_options['channels'] ) ) {
-			foreach ( (array) $youtube_options['channels']['ids'] as $index => $channel_id ) {
+		if ( isset( $youtube_options['playlists'] ) ) {
+			foreach ( (array) $youtube_options['playlists']['ids'] as $index => $playlist_id ) {
 
-				if ( ! $channel_id ) {
+				if ( ! $playlist_id ) {
 
 					continue;
 				}
 
-				$this->youtube_channel_settings( $reindex++, $channel_id );
+				$this->youtube_playlist_settings( $reindex++, $playlist_id );
 			}
 		}
 
-		// New Channel.
+		// New Playlist.
 		premise_field(
 			'text',
 			array(
-				'name'    => 'psmb_youtube[channels][ids][' . $reindex . ']',
-				'label'   => __( 'New YouTube channel ID', 'psmb' ),
-				'placeholder' => 'UC70gZSTkSeqn61TJkpOm3bQ',
+				'name'    => 'psmb_youtube[playlists][ids][' . $reindex . ']',
+				'label'   => __( 'New YouTube playlist ID', 'psmb' ),
+				'placeholder' => 'PLspxhVrUtmnzdH5yFonnliJ44kLOZJyRz',
 				'class'   => 'span12',
-				'tooltip' => __( 'The ID is the last part of the channel URL, right after "channel/"', 'psmb' ),
+				'tooltip' => __( 'The ID is the last part of the playlist URL, right after "list="', 'psmb' ),
 			)
 		);
 
 		$youtube_options = $this->options['psmb_youtube'];
 
 		if ( isset( $youtube_options['cpt_instance_ids'] ) ) {
-			// Save our cpt_instance_ids too when saving channel IDs!
+			// Save our cpt_instance_ids too when saving playlist IDs!
 			foreach ( (array) $youtube_options['cpt_instance_ids'] as $option_index => $option_value ) : ?>
 				<input type="hidden"
 					name="psmb_youtube[cpt_instance_ids][<?php esc_attr_e( $option_index ); ?>]"
@@ -136,14 +136,14 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 
 
 	/**
-	 * YouTube Channel settings
+	 * YouTube Playlist settings
 	 *
-	 * @param int    $index      YouTube Channel 'ids' index.
-	 * @param string $channel_id YouTube Channel ID.
+	 * @param int    $index       YouTube Playlist 'ids' index.
+	 * @param string $playlist_id YouTube Playlist ID.
 	 *
-	 * Outputs the YouTube Channel options
+	 * Outputs the YouTube Playlist options
 	 */
-	private function youtube_channel_settings( $index, $channel_id ) {
+	private function youtube_playlist_settings( $index, $playlist_id ) {
 
 		static $youtube_client;
 
@@ -159,40 +159,40 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 		premise_field(
 			'text',
 			array(
-				'name'    => 'psmb_youtube[channels][ids][' . $index . ']',
-				'label'   => __( 'YouTube channel ID', 'psmb' ),
+				'name'    => 'psmb_youtube[playlists][ids][' . $index . ']',
+				'label'   => __( 'YouTube playlist ID', 'psmb' ),
 				'placeholder' => 'UC70gZSTkSeqn61TJkpOm3bQ',
 				'class'   => 'span12',
-				'tooltip' => __( 'The ID is the last part of the channel URL, right after "channel/"', 'psmb' ),
+				'tooltip' => __( 'The ID is the last part of the playlist URL, right after "list="', 'psmb' ),
 			)
 		);
 
-		$channels = $youtube_client->get_channel( $channel_id );
+		$playlists = $youtube_client->get_playlist( $playlist_id );
 
-		if ( ! $channels ) {
+		if ( ! $playlists ) {
 			esc_html_e( $this->notification(
-				sprintf( __( '"%s" is not a valid YouTube Channel ID.', 'psmb' ), $channel_id ),
+				sprintf( __( '"%s" is not a valid YouTube Playlist ID.', 'psmb' ), $playlist_id ),
 				'error'
 			) );
 
 			return;
 		}
 
-		$channel_details = $youtube_client->get_channel_details( $channels[0] );
+		$playlist_details = $youtube_client->get_playlist_details( $playlists[0] );
 
-		if ( ! isset( $youtube_options['channels'][ $channel_id ] ) ) {
+		if ( ! isset( $youtube_options['playlists'][ $playlist_id ] ) ) {
 
-			$video_ids = $youtube_client->get_playlist_video_ids( $channel_details['playlist_id'], 50 );
+			$video_ids = $youtube_client->get_playlist_video_ids( $playlist_details['id'], 50 );
 
 			$new_cpt_instance_id = 0;
 
-			$history_channel = false;
+			$history_playlist = false;
 
 			foreach ( (array) $youtube_options['cpt_instance_ids'] as $new_cpt_instance_id => $chan_id ) {
 
-				if ( $channel_id === $chan_id ) {
+				if ( $playlist_id === $chan_id ) {
 
-					$history_channel = true;
+					$history_playlist = true;
 
 					continue;
 				}
@@ -200,72 +200,72 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 				$new_cpt_instance_id++;
 			}
 
-			if ( ! $history_channel ) {
+			if ( ! $history_playlist ) {
 
-				// Add channel to cpt_instance_ids.
-				$youtube_options['cpt_instance_ids'][] = $channel_id;
+				// Add playlist to cpt_instance_ids.
+				$youtube_options['cpt_instance_ids'][] = $playlist_id;
 			}
 
-			// Default channel settings.
-			$channel = array(
+			// Default playlist settings.
+			$playlist = array(
 				'video_ids' => $video_ids,
 				'imported_video_ids' => array(),
 				'old_videos_imported' => '0',
 				'cpt_instance_id' => (string) $new_cpt_instance_id,
-				'title' => $channel_details['title'],
+				'title' => $playlist_details['title'],
 				'post_type' => 'psmb_youtube',
 				'category_id' => '',
 				'post_format' => 'video',
 			);
 
 			// Update options.
-			$youtube_options['channels'][ $channel_id ] = $channel;
+			$youtube_options['playlists'][ $playlist_id ] = $playlist;
 
 			$this->options['psmb_youtube'] = $youtube_options;
 
 			update_option( 'psmb_youtube', $youtube_options );
 
-			Premise_Social_Media_Blogger_Youtube_CPT::get_instance( $channel['cpt_instance_id'], $channel['title'] );
+			Premise_Social_Media_Blogger_Youtube_CPT::get_instance( $playlist['cpt_instance_id'], $playlist['title'] );
 
 			// Set New CPT transient!
 			set_transient( 'psmb_new_cpt', true );
 
 		} else {
-			$channel = $youtube_options['channels'][ $channel_id ];
+			$playlist = $youtube_options['playlists'][ $playlist_id ];
 
-			$video_ids = $channel['video_ids'];
+			$video_ids = $playlist['video_ids'];
 		}
 
-		// Save our channels too when saving channel IDs!
-		foreach ( (array) $channel as $option_index => $option_value ) :
+		// Save our playlists too when saving playlist IDs!
+		foreach ( (array) $playlist as $option_index => $option_value ) :
 			// Nested array of options.
 			if ( is_array( $option_value )
 				&& $option_value ) :
 				foreach ( $option_value as $sub_option_index => $sub_option_value ) : ?>
 			<input type="hidden"
-				name="psmb_youtube[channels][<?php esc_attr_e( $channel_id ); ?>][<?php esc_attr_e( $option_index ); ?>][<?php esc_attr_e( $sub_option_index ); ?>]"
+				name="psmb_youtube[playlists][<?php esc_attr_e( $playlist_id ); ?>][<?php esc_attr_e( $option_index ); ?>][<?php esc_attr_e( $sub_option_index ); ?>]"
 				value="<?php esc_attr_e( $sub_option_value ); ?>" />
 			<?php endforeach;
 			else : ?>
 			<input type="hidden"
-				name="psmb_youtube[channels][<?php esc_attr_e( $channel_id ); ?>][<?php esc_attr_e( $option_index ); ?>]"
+				name="psmb_youtube[playlists][<?php esc_attr_e( $playlist_id ); ?>][<?php esc_attr_e( $option_index ); ?>]"
 				value="<?php esc_attr_e( is_array( $option_value ) ? '' : $option_value ); ?>" />
 		<?php
 			endif;
 		endforeach;
 
 		$select_attr = array(
-			'name'    => 'psmb_youtube[channels][' . $channel_id . '][post_type]',
+			'name'    => 'psmb_youtube[playlists][' . $playlist_id . '][post_type]',
 			'label'   => __( 'Post type', 'psmb' ),
 			'class'   => 'span12',
 			'options' => array(
-				sprintf( __( '%s Videos (Custom Post Type)', 'psmb' ), $channel_details['title'] ) => 'psmb_youtube',
+				sprintf( __( '%s Videos (Custom Post Type)', 'psmb' ), $playlist_details['title'] ) => 'psmb_youtube',
 				__( 'Posts', 'psmb' ) => 'post',
 			),
 		);
 
-		if ( $channel['imported_video_ids']
-			&& 'post' !== $channel['post_type'] ) {
+		if ( $playlist['imported_video_ids']
+			&& 'post' !== $playlist['post_type'] ) {
 
 			$select_attr['tooltip'] = __( 'Warning: your custom post type and its videos
 				will disappear from the menu if you select "Posts"', 'psmb' );
@@ -276,39 +276,36 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 			$select_attr
 		);
 
-		// Select default category for each channel.
-		$this->select_default_category( $channel );
+		// Select default category for each playlist.
+		$this->select_default_category( $playlist );
 
-		// Select default post format for each channel.
-		$this->select_default_post_format( $channel );
+		// Select default post format for each playlist.
+		$this->select_default_post_format( $playlist );
 
-		if ( ! $channel['old_videos_imported'] ) {
-			$import_url = '?page=psmb_settings&psmb_import_youtube_channel=' .
-				$channel_id;
+		if ( ! $playlist['old_videos_imported'] ) {
+			$import_url = '?page=psmb_settings&psmb_import_youtube_playlist=' .
+				$playlist_id;
 
-			$old_videos_number = $channel['imported_video_ids'] ?
-				count( $channel['video_ids'] ) - count( $channel['imported_video_ids'] ) :
-				count( $channel['video_ids'] );
+			$old_videos_number = $playlist['imported_video_ids'] ?
+				count( $playlist['video_ids'] ) - count( $playlist['imported_video_ids'] ) :
+				count( $playlist['video_ids'] );
 		}
 		?>
 		<p>
-			<a href="<?php echo esc_url( $channel_details['url'] ); ?>" target="_blank">
-				<?php esc_html_e( $channel_details['title'] ); ?>
+			<a href="<?php echo esc_url( $playlist_details['url'] ); ?>" target="_blank">
+				<?php esc_html_e( $playlist_details['title'] ); ?>
 			</a>
-			<?php if ( $channel_details['description'] ) : ?>:
-				<?php esc_html_e( $channel_details['description'] ); ?>
-			<?php endif; ?>
 			<br />
-			<?php esc_html_e( sprintf( __( 'Number of owned videos: %d', 'psmb' ), count( $video_ids ) ) ); ?>
-			<?php if ( $channel['imported_video_ids'] ) : ?>
+			<?php esc_html_e( sprintf( __( 'Number of videos: %d', 'psmb' ), count( $video_ids ) ) ); ?>
+			<?php if ( $playlist['imported_video_ids'] ) : ?>
 				, <?php esc_html_e( sprintf(
 					__( 'Imported: %d', 'psmb' ),
-					count( $channel['imported_video_ids'] )
+					count( $playlist['imported_video_ids'] )
 				) ); ?>
 			<?php endif; ?>
-			<?php if ( ! $channel['old_videos_imported']
+			<?php if ( ! $playlist['old_videos_imported']
 				&& $old_videos_number ) : ?>
-				<a href="<?php echo esc_url( $import_url ); ?>" class="primary"style="float: right;"
+				<a href="<?php echo esc_url( $import_url ); ?>" class="primary" style="float: right;"
 					onclick="document.getElementById('import-youtube-spinner').className += ' is-active';">
 					<span class="spinner" id="import-youtube-spinner"></span>
 					<?php echo esc_html( sprintf(
@@ -332,23 +329,23 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 	 * @uses Premise_Social_Media_Blogger_Youtube
 	 * @uses Premise_Social_Media_Blogger_Youtube_CPT::insert_youtube_post()
 	 *
-	 * @param  int $channel_id Channel ID.
+	 * @param  int $playlist_id Playlist ID.
 	 *
 	 * @return bool|array      Errors or false.
 	 */
-	private function import_old_youtube_videos( $channel_id ) {
+	private function import_old_youtube_videos( $playlist_id ) {
 
 		$youtube_options = $this->options['psmb_youtube'];
 
-		if ( ! isset( $youtube_options['channels'][ $channel_id ] ) ) {
+		if ( ! isset( $youtube_options['playlists'][ $playlist_id ] ) ) {
 
-			return array( __( 'YouTube Channel not found!', 'psmb' ) );
+			return array( __( 'YouTube Playlist not found!', 'psmb' ) );
 
 		}
 
-		$channel = $youtube_options['channels'][ $channel_id ];
+		$playlist = $youtube_options['playlists'][ $playlist_id ];
 
-		if ( $channel['old_videos_imported'] ) {
+		if ( $playlist['old_videos_imported'] ) {
 
 			return array( __( 'Old videos already imported!', 'psmb' ) );
 
@@ -358,30 +355,30 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 
 		$youtube_client = new Premise_Social_Media_Blogger_Youtube( $youtube_options['developer_key'] );
 
-		$channels = $youtube_client->get_channel( $channel_id );
+		$playlists = $youtube_client->get_playlist( $playlist_id );
 
-		if ( ! $channels ) {
+		if ( ! $playlists ) {
 
-			return array( sprintf( __( '"%s" is not a valid YouTube Channel ID.', 'psmb' ), $channel_id ) );
+			return array( sprintf( __( '"%s" is not a valid YouTube Playlist ID.', 'psmb' ), $playlist_id ) );
 
 		}
 
-		$channel_details = $youtube_client->get_channel_details( $channels[0] );
+		$playlist_details = $youtube_client->get_playlist_details( $playlists[0] );
 
-		$video_ids = $youtube_client->get_playlist_video_ids( $channel_details['playlist_id'], 50 );
+		$video_ids = $youtube_client->get_playlist_video_ids( $playlist_details['id'], 50 );
 
 		$import_video_ids = $imported_video_ids = $video_ids;
 
-		if ( $channel['imported_video_ids'] ) {
+		if ( $playlist['imported_video_ids'] ) {
 
 			// Eliminate already imported videos!
-			$import_video_ids = array_diff( $video_ids, $channel['imported_video_ids'] );
+			$import_video_ids = array_diff( $video_ids, $playlist['imported_video_ids'] );
 
 			// Add videos to imported array.
-			$imported_video_ids = array_merge( $channel['imported_video_ids'], $import_video_ids );
+			$imported_video_ids = array_merge( $playlist['imported_video_ids'], $import_video_ids );
 		}
 
-		$youtube_cpt = Premise_Social_Media_Blogger_Youtube_CPT::get_instance( $channel['cpt_instance_id'], $channel['title'] );
+		$youtube_cpt = Premise_Social_Media_Blogger_Youtube_CPT::get_instance( $playlist['cpt_instance_id'], $playlist['title'] );
 
 		$videos = $youtube_client->get_videos( $import_video_ids );
 
@@ -391,9 +388,9 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 
 			$post_type = 'post';
 
-			if ( 'psmb_youtube' === $channel['post_type'] ) {
+			if ( 'psmb_youtube' === $playlist['post_type'] ) {
 
-				$post_type = 'psmb_youtube_' . $channel['cpt_instance_id'];
+				$post_type = 'psmb_youtube_' . $playlist['cpt_instance_id'];
 			}
 
 			// Insert YouTube post.
@@ -405,12 +402,12 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 		}
 
 		// Mark as imported.
-		$channel['old_videos_imported'] = '1';
+		$playlist['old_videos_imported'] = '1';
 
 		// Save video IDs!
-		$channel['imported_video_ids'] = $imported_video_ids;
+		$playlist['imported_video_ids'] = $imported_video_ids;
 
-		$youtube_options['channels'][ $channel_id ] = $channel;
+		$youtube_options['playlists'][ $playlist_id ] = $playlist;
 
 		update_option( 'psmb_youtube', $youtube_options );
 
@@ -422,17 +419,17 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 
 	/**
 	 * Select default category
-	 * for each channel.
+	 * for each playlist.
 	 *
-	 * @param  array $channel Channel details.
+	 * @param  array $playlist Playlist details.
 	 */
-	private function select_default_category( $channel ) {
+	private function select_default_category( $playlist ) {
 
 		$category_taxonomy = 'category';
 
-		if ( 'post' !== $channel['post_type'] ) {
+		if ( 'post' !== $playlist['post_type'] ) {
 
-			$category_taxonomy = 'psmb_youtube_' . $channel['cpt_instance_id'] . '-category';
+			$category_taxonomy = 'psmb_youtube_' . $playlist['cpt_instance_id'] . '-category';
 		}
 
 		$category_options = array( __( 'YouTube category', 'psmb' ) => '' );
@@ -446,7 +443,7 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 
 		// Select Category from already created categories, to override Video category.
 		$select_attr = array(
-			'name'    => 'psmb_youtube[channels][' . $channel['cpt_instance_id'] . '][category_id]',
+			'name'    => 'psmb_youtube[playlists][' . $playlist['cpt_instance_id'] . '][category_id]',
 			'label'   => __( 'Category', 'psmb' ),
 			'class'   => 'span12',
 			'options' => $category_options,
@@ -461,11 +458,11 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 
 	/**
 	 * Select default post format
-	 * for each channel.
+	 * for each playlist.
 	 *
-	 * @param  array $channel Channel details.
+	 * @param  array $playlist Playlist details.
 	 */
-	private function select_default_post_format( $channel ) {
+	private function select_default_post_format( $playlist ) {
 
 		$format_options = array(
 			__( 'Standard' ) => '',
@@ -482,7 +479,7 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 
 		// Select Post Format.
 		$select_attr = array(
-			'name'    => 'psmb_youtube[channels][' . $channel['cpt_instance_id'] . '][post_format]',
+			'name'    => 'psmb_youtube[playlists][' . $playlist['cpt_instance_id'] . '][post_format]',
 			'label'   => __( 'Post Format', 'psmb' ),
 			'class'   => 'span12',
 			'options' => $format_options,

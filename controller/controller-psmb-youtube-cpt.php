@@ -17,25 +17,25 @@ require_once PSMB_PATH . 'model/model-psmb-youtube-cpt.php';
  *
  * @see  Premise_Social_Media_Blogger_Youtube_CPT class
  */
-$youtube_channels = array( 'ids' => array() );
+$youtube_playlists = array( 'ids' => array() );
 
-// Register as many Youtube Videos custom post type as Youtube channels we have.
+// Register as many Youtube Videos custom post type as Youtube playlists we have.
 if ( function_exists( 'premise_get_value' ) ) {
-	$youtube_channels = premise_get_value( 'psmb_youtube[channels]' );
+	$youtube_playlists = premise_get_value( 'psmb_youtube[playlists]' );
 }
 
 $meta_box_post_registered = false;
 
-foreach ( (array) $youtube_channels['ids'] as $channel_id ) {
+foreach ( (array) $youtube_playlists['ids'] as $playlist_id ) {
 
-	if ( ! isset( $youtube_channels[ $channel_id ] ) ) {
+	if ( ! isset( $youtube_playlists[ $playlist_id ] ) ) {
 
 		continue;
 	}
 
-	$channel = $youtube_channels[ $channel_id ];
+	$playlist = $youtube_playlists[ $playlist_id ];
 
-	if ( 'post' === $channel['post_type'] ) {
+	if ( 'post' === $playlist['post_type'] ) {
 
 		if ( ! $meta_box_post_registered ) {
 			// Register the Meta Box for regular post type, once.
@@ -47,7 +47,7 @@ foreach ( (array) $youtube_channels['ids'] as $channel_id ) {
 		continue;
 	}
 
-	$cpt_instance_id = $channel['cpt_instance_id'];
+	$cpt_instance_id = $playlist['cpt_instance_id'];
 
-	Premise_Social_Media_Blogger_Youtube_CPT::get_instance( $cpt_instance_id, $channel['title'] );
+	Premise_Social_Media_Blogger_Youtube_CPT::get_instance( $cpt_instance_id, $playlist['title'] );
 }
