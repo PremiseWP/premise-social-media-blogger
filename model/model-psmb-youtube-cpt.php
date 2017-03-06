@@ -351,6 +351,13 @@ class Premise_Social_Media_Blogger_Youtube_CPT {
 
 				if ( ! $term_id ) {
 
+					if ( ! function_exists( 'wp_create_category' ) ) {
+
+						// Fix PHP error Call to undefined function wp_create_category().
+						require_once( ABSPATH . 'wp-load.php' );
+						require_once( ABSPATH . 'wp-admin/includes/taxonomy.php' );
+					}
+
 					// Create Category!
 					$term_id = wp_create_category( $video_details['category'] );
 				} else {
