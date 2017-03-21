@@ -83,7 +83,8 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 			)
 		);
 
-		if ( ! $youtube_options['developer_key'] ) {
+		if ( ! isset( $youtube_options['developer_key'] ) ||
+			! $youtube_options['developer_key'] ) {
 
 			return;
 		}
