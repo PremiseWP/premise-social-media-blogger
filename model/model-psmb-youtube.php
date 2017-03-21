@@ -264,7 +264,13 @@ class Premise_Social_Media_Blogger_Youtube {
 
 		$video_details['date'] = $video_snippet->getPublishedAt();
 
-		$video_details['thumbnail'] = $video_snippet->getThumbnails()->getMaxres()['url'];
+		$video_details['thumbnail'] = $video_snippet->getThumbnails()->getMaxres();
+
+		if ( ! $video_details['thumbnail'] ) {
+			$video_details['thumbnail'] = $video_snippet->getThumbnails()->getStandard();
+		}
+
+		$video_details['thumbnail'] = $video_details['thumbnail']->getUrl();
 
 		$video_details['tags'] = $video_snippet->tags;
 
