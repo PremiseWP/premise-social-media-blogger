@@ -270,7 +270,17 @@ class Premise_Social_Media_Blogger_Youtube {
 			$video_details['thumbnail'] = $video_snippet->getThumbnails()->getStandard();
 		}
 
-		$video_details['thumbnail'] = $video_details['thumbnail']->getUrl();
+		if ( ! $video_details['thumbnail'] ) {
+			$video_details['thumbnail'] = $video_snippet->getThumbnails()->getDefault();
+		}
+
+		if ( ! $video_details['thumbnail'] ) {
+			$video_details['thumbnail'] = '';
+		} else {
+
+			$video_details['thumbnail'] = $video_details['thumbnail']->getUrl();
+		}
+
 
 		$video_details['tags'] = $video_snippet->tags;
 
