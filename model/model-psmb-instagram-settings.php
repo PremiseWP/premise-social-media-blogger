@@ -300,6 +300,13 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 			'tooltip' => 'The plugin uses the first line of your post to set the post title. If the first line is longer than this number, then the plugin will set the title based on Username and Date of your post. For SEO purposes, this helps keep things consistent with the way you use instagram.',
 		) );
 
+		pwp_field( array(
+			'type' => 'text',
+			'name' => 'psmb_instagram[account][tags_exclude]',
+			'label' => 'Tags to exclude',
+			'tooltip' => 'List of tags, separated by commas. Posts having those tags will be added with the "Pending Review" status.',
+		) );
+
 		// Select default category.
 		$this->select_default_category( $account );
 

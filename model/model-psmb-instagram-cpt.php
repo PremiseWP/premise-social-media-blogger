@@ -297,11 +297,18 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 		// Regular Post: only description.
 		$content = $photo_details['description'];
 
+		$post_status = 'publish';
+
+		if ( $this->photo_has_excluded_tags( $photo_details['tags'] ) ) {
+			// Post status is Pending Review if have excluded tags.
+			$post_status = 'pending';
+		}
+
 		// Add Instagram video URL (in place of description) to post content for automatic embedding.
 		// Insert new Instagram post.
 		$instagram = array(
 			'post_title' => $photo_details['title'],
-			'post_status' => 'publish',
+			'post_status' => $post_status,
 			'post_date' => $photo_details['date'],
 			'post_type' => $post_type,
 			'post_content' => $content,
@@ -364,5 +371,40 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 		}
 
 		return $instagram_id;
+	}
+
+
+	/**
+	 * Check if photo has excluded tags.
+	 *
+	 * @since 1.2
+	 *
+	 * @param  array   $photo_tags Photo tags.
+	 *
+	 * @return boolean             True if photo has excluded tags, else false.
+	 */
+	protected function photo_has_excluded_tags( $photo_tags ) {
+		// Get excluded tags option.
+		$excluded_tags = premise_get_option( 'psmb_instagram[account][tags_exclude]' );
+
+		if ( ! $excluded_tags ) {
+			return false;
+		}
+
+		$excluded_tags = explode( ',', $excluded_tags );
+
+		foreach ( (array) $excluded_tags as $excluded_tag ) {
+			$excluded_tag = trim( $excluded_tag );
+
+			if ( '' === $excluded_tag ) {
+				continue;
+			}
+
+			if ( in_array( $excluded_tag, $photo_tags ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

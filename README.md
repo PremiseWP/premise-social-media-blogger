@@ -10,6 +10,7 @@ PHP curl extension.
 
 ## v1.2
 - Remove title from post content (Instagram)
+- New option: Exclude tags. Excluded posts are not published (Pending Review) (Instagram)
 
 ## v1.1
 - Switch from YouTube Channel ID to YouTube Playlist ID.
