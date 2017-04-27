@@ -9,6 +9,7 @@ PHP curl extension.
 # Changelog
 
 ## v1.2
+- Fix no Youtube video thumbnail: get standard or default
 - Remove title from post content (Instagram)
 - New option: Exclude tags. Excluded posts are not published (Pending Review) (Instagram)
 
