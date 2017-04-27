@@ -218,10 +218,16 @@ class Premise_Social_Media_Blogger_Instagram {
 
 		$photo_details['url'] = $photo->link;
 
+		// Remove first line (title) from description.
+		$photo_details['description'] = substr(
+			$photo->caption->text,
+			strpos( $photo->caption->text, "\n", 0 ) + 2
+		);
+
 		// Generate HTML and taggify.
 		// nl2br( linkify( psmb_instagram_taggify( $photo->caption->text ) ) ); // this is causing issues when saving the post.
 		$photo_details['description'] = wpautop( wptexturize(
-			psmb_instagram_taggify( $photo->caption->text )
+			psmb_instagram_taggify( $photo_details['description'] )
 		) );
 
 		$photo_details['date'] = gmdate( "Y-m-d\TH:i:s\Z", $photo->created_time );
