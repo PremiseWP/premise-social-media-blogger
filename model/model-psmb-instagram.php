@@ -207,7 +207,8 @@ class Premise_Social_Media_Blogger_Instagram {
 			? (int) premise_get_value( 'psmb_instagram[options][title_max_len]' )
 			: 100;
 
-		if ( $title_max_len >= strlen( $first_line ) ) {
+		if ( $first_line &&
+			$title_max_len >= strlen( $first_line ) ) {
 			// Use first line as title.
 			$photo_details['title'] = $first_line;
 		} else {
@@ -220,7 +221,8 @@ class Premise_Social_Media_Blogger_Instagram {
 
 		$photo_details['description'] = $photo->caption->text;
 
-		if ( $title_max_len >= strlen( $first_line ) ) {
+		if ( $first_line &&
+			$title_max_len >= strlen( $first_line ) ) {
 			// Remove first line (title) from description.
 			$photo_details['description'] = str_replace( $first_line, '', $photo_details['description'] );
 		}

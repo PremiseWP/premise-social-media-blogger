@@ -17,21 +17,38 @@ require_once PSMB_PATH . 'model/model-psmb-instagram-cpt.php';
  *
  * @see  Premise_Social_Media_Blogger_Instagram_CPT class
  */
-$instagram_account = array();
+$instagram_account_ids = array();
 
-// Register as many Instagram Videos custom post type as Instagram account we have.
+// Register as many Instagram Videos custom post type as Instagram accounts we have.
 if ( function_exists( 'premise_get_value' ) ) {
-	$instagram_account = premise_get_value( 'psmb_instagram[account]' );
+	$instagram = premise_get_value( 'psmb_instagram' );
+
+	foreach ( (array) $instagram as $key => $values ) {
+		if ( strpos( $key, 'account' ) === 0 ) {
+			$instagram_account_ids[] = (string) substr( $key, 7 );
+		}
+	}
 }
 
-if ( $instagram_account ) {
+$meta_box_post_registered = false;
+
+foreach ( (array) $instagram_account_ids as $account_id ) {
+
+	$instagram_account = $instagram[ 'account' . $account_id ];
 
 	if ( 'post' === $instagram_account['post_type'] ) {
 
-		// Register the Meta Box for regular post type, once.
-		new Premise_Social_Media_Blogger_Instagram_CPT( 'Posts', 'post' );
-	} else {
+		if ( ! $meta_box_post_registered ) {
+			// Register the Meta Box for regular post type, once.
+			new Premise_Social_Media_Blogger_Instagram_CPT( 99, 'Posts', 'post' );
 
-		Premise_Social_Media_Blogger_Instagram_CPT::get_instance( $instagram_account['title'] );
+			$meta_box_post_registered = true;
+		}
+
+		continue;
 	}
+
+	$cpt_instance_id = $account_id;
+
+	Premise_Social_Media_Blogger_Instagram_CPT::get_instance( (int) $cpt_instance_id, $instagram_account['title'] );
 }

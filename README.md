@@ -8,6 +8,9 @@ PHP curl extension.
 
 # Changelog
 
+## v1.3
+- Ability to add various Instagram accounts
+
 ## v1.2
 - Fix no Youtube video thumbnail: get standard or default
 - Remove title from post content (Instagram)

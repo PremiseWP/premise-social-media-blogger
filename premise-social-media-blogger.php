@@ -3,7 +3,7 @@
  * Plugin Name: Premise Social Media Blogger
  * Description: Automatically creates a post on your site when you upload a video on your YouTube playlist or a post on your Instagram account. Posts are created with description, categories (youtube), tags, date, and of course image or video. You can then add more content or rearrange to your liking. Easy to setup, with full detailed instructions included. Let us know your thoughts on Twitter <a href="https://twitter.com/premisewp" target="_blank">@premisewp</a> and if you need help use hashtag <code>#PremiseSupport</code>, we'll come to the rescue.
  * Plugin URI:
- * Version:     1.2.0
+ * Version:     1.3.0
  * Author:      Premise WP (@premisewp)
  * Author URI:  http://premisewp.com
  * License:     see LICENSE file

@@ -42,8 +42,10 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 
 		if ( isset( $get_vars['psmb_import_instagram_account'] ) ) {
 
+			$account_id = $get_vars['psmb_import_instagram_account'];
+
 			// Import old photos.
-			$import_errors = $this->import_old_instagram_photos();
+			$import_errors = $this->import_old_instagram_photos( $account_id );
 
 			if ( $import_errors ) {
 
@@ -56,7 +58,7 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 				esc_html_e( $this->notification(
 					sprintf(
 						__( 'The old photos were successfully imported. Check the %s for new entries!', 'psmb' ),
-						( 'post' === $instagram_options['account']['post_type'] ?
+						( 'post' === $instagram_options[ 'account' . $account_id ]['post_type'] ?
 							__( 'Posts', 'psmb' ) :
 							__( 'Instagram photos', 'psmb' ) )
 					),
@@ -65,50 +67,89 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 			}
 		}
 
-		$api_options = $instagram_options['api_options'];
+		for ( $i = 0; ; $i++ ) {
 
-		// Developer key.
-		if ( ! $api_options
-			|| ! $api_options['apiKey']
-			|| ! $api_options['apiSecret'] ) : ?>
-		<p>
-			<?php echo sprintf(
-				__( 'First of all, %s at Instagram. Valid Redirect URI: %s. You will receive an API Client ID and secret.', 'psmb' ),
-				'<a href="http://instagr.am/developer/register/" target="_blank">' .
-					__( 'register your application', 'psmb' ) .
-				'</a>',
-				'<code>' . admin_url( 'options-general.php' ) . '</code>'
-			); ?>
-		</p>
-		<?php endif;
-		premise_field(
-			'text',
-			array(
-				'name'    => 'psmb_instagram[api_options][apiKey]',
-				'label'   => __( 'Instagram Client ID', 'psmb' ),
-				'placeholder' => '20cf390597f442398f35d9e88fd225df',
-				'class'   => 'span6',
-			)
-		);
+			if ( $i ) {
+				$account_id = (string) $i;
 
-		premise_field(
-			'text',
-			array(
-				'name'    => 'psmb_instagram[api_options][apiSecret]',
-				'label'   => __( 'Instagram Client secret', 'psmb' ),
-				'placeholder' => 'b845b0bf61624c98940f1f0a9018773b',
-				'class'   => 'span6',
-			)
-		);
+			} else {
+				$account_id = '';
+			}
 
-		if ( ! $api_options
-			|| ! $api_options['apiKey']
-			|| ! $api_options['apiSecret'] ) {
+			$api_options = @$instagram_options[ 'api_options' . $account_id ];
 
-			return;
+			// Developer key.
+			if ( ! $api_options
+				|| ! isset( $api_options['apiKey'] )
+				|| ! $api_options['apiKey']
+				|| ! $api_options['apiSecret'] ) :
+
+				if ( isset( $api_options['deleted'] ) ||
+					isset( $instagram_options[ 'api_options' . ($account_id + 1) ] ) ) : ?>
+					<input type="hidden"
+						name="psmb_instagram[api_options<?php esc_attr_e( $account_id ); ?>][deleted]"
+						value="true" />
+				<?php continue;
+				endif;
+
+				if ( $account_id ) : ?>
+					<hr />
+					<p>
+						<?php _e( 'New Instagram account:', 'psmb' ); ?>
+					</p>
+				<?php
+				endif; ?>
+			<p>
+				<?php echo sprintf(
+					__( 'First of all, %s at Instagram. Valid Redirect URI: %s. You will receive an API Client ID and secret.', 'psmb' ),
+					'<a href="http://instagr.am/developer/register/" target="_blank">' .
+						__( 'register your application', 'psmb' ) .
+					'</a>',
+					'<code>' . admin_url( 'options-general.php' ) . '</code>'
+				); ?>
+			</p>
+			<?php
+			elseif ( $account_id ) : ?>
+				<hr />
+			<?php
+			endif;
+
+			premise_field(
+				'text',
+				array(
+					'name'    => 'psmb_instagram[api_options' . $account_id . '][apiKey]',
+					'label'   => __( 'Instagram Client ID', 'psmb' ),
+					'placeholder' => '20cf390597f442398f35d9e88fd225df',
+					'class'   => 'span6',
+				)
+			);
+
+			premise_field(
+				'text',
+				array(
+					'name'    => 'psmb_instagram[api_options' . $account_id . '][apiSecret]',
+					'label'   => __( 'Instagram Client secret', 'psmb' ),
+					'placeholder' => 'b845b0bf61624c98940f1f0a9018773b',
+					'class'   => 'span6',
+				)
+			);
+
+			if ( ! $api_options
+				|| ! $api_options['apiKey']
+				|| ! $api_options['apiSecret'] ) {
+
+				return;
+			}
+
+			$this->instagram_account_settings( $account_id );
+
+			if ( ! isset( $instagram_options[ 'api_options' . ($account_id + 1) ] ) &&
+				! isset( $instagram_options[ 'account' . $account_id ] ) ) {
+
+				// New account to be authorized, quit (no more New Instagram account form).
+				break;
+			}
 		}
-
-		$this->instagram_account_settings();
 	}
 
 
@@ -116,14 +157,16 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 
 	/**
 	 * Instagram Account settings
+	 *
+	 * @param string $account_id Account ID.
 	 */
-	private function instagram_account_settings() {
+	private function instagram_account_settings( $account_id = '' ) {
 
 		$instagram_options = $this->options['psmb_instagram'];
 
 		require_once PSMB_PATH . 'model/model-psmb-instagram.php';
 
-		$api_options = $instagram_options['api_options'];
+		$api_options = $instagram_options[ 'api_options' . $account_id ];
 
 		$instagram_client = new Premise_Social_Media_Blogger_Instagram( $api_options );
 
@@ -149,7 +192,7 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 				$api_options['apiToken'] = $token;
 
 				// Save Instagram options.
-				$instagram_options['api_options'] = $api_options;
+				$instagram_options[ 'api_options' . $account_id ] = $api_options;
 
 				$this->options['psmb_instagram'] = $instagram_options;
 
@@ -193,7 +236,7 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 		} else {
 			// Save our apiToken too when saving! ?>
 			<input type="hidden"
-				name="psmb_instagram[api_options][apiToken]"
+				name="psmb_instagram[api_options<?php esc_attr_e( $account_id ); ?>][apiToken]"
 				value="<?php esc_attr_e( $api_options['apiToken'] ); ?>" />
 		<?php
 		}
@@ -207,8 +250,8 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 
 		$account_details = $instagram_client->get_account_details();
 
-		if ( ! isset( $instagram_options['account']['username'] )
-			|| $instagram_options['account']['username'] !== $account_details['username'] ) {
+		if ( ! isset( $instagram_options[ 'account' . $account_id ]['username'] )
+			|| $instagram_options[ 'account' . $account_id ]['username'] !== $account_details['username'] ) {
 
 			$photos = $instagram_client->get_account_photos( 50 );
 
@@ -233,19 +276,19 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 			);
 
 			// Update options.
-			$instagram_options['account'] = $account;
+			$instagram_options[ 'account' . $account_id ] = $account;
 
 			$this->options['psmb_instagram'] = $instagram_options;
 
 			update_option( 'psmb_instagram', $instagram_options );
 
-			Premise_Social_Media_Blogger_Instagram_CPT::get_instance( $account['title'] );
+			Premise_Social_Media_Blogger_Instagram_CPT::get_instance( (int) $account_id, $account['title'] );
 
 			// Set New CPT transient!
 			set_transient( 'psmb_new_cpt', true );
 
 		} else {
-			$account = $instagram_options['account'];
+			$account = $instagram_options[ 'account' . $account_id ];
 
 			$photo_ids = $account['photo_ids'];
 		}
@@ -258,19 +301,19 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 				&& $option_value ) :
 				foreach ( $option_value as $sub_option_index => $sub_option_value ) : ?>
 			<input type="hidden"
-				name="psmb_instagram[account][<?php esc_attr_e( $option_index ); ?>][<?php esc_attr_e( $sub_option_index ); ?>]"
+				name="psmb_instagram[account<?php esc_attr_e( $account_id ); ?>][<?php esc_attr_e( $option_index ); ?>][<?php esc_attr_e( $sub_option_index ); ?>]"
 				value="<?php esc_attr_e( $sub_option_value ); ?>" />
 			<?php endforeach;
 			else : ?>
 			<input type="hidden"
-				name="psmb_instagram[account][<?php esc_attr_e( $option_index ); ?>]"
+				name="psmb_instagram[account<?php esc_attr_e( $account_id ); ?>][<?php esc_attr_e( $option_index ); ?>]"
 				value="<?php esc_attr_e( is_array( $option_value ) ? '' : $option_value ); ?>" />
 		<?php
 			endif;
 		endforeach;
 
 		$select_attr = array(
-			'name'    => 'psmb_instagram[account][post_type]',
+			'name'    => 'psmb_instagram[account' . $account_id . '][post_type]',
 			'label'   => __( 'Post type', 'psmb' ),
 			'class'   => 'span12',
 			'options' => array(
@@ -302,19 +345,19 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 
 		pwp_field( array(
 			'type' => 'text',
-			'name' => 'psmb_instagram[account][tags_exclude]',
+			'name' => 'psmb_instagram[account' . $account_id . '][tags_exclude]',
 			'label' => 'Tags to exclude',
 			'tooltip' => 'List of tags, separated by commas. Posts having those tags will be added with the "Pending Review" status.',
 		) );
 
 		// Select default category.
-		$this->select_default_category( $account );
+		$this->select_default_category( $account_id, $account );
 
 		// Select default post format.
-		$this->select_default_post_format( $account );
+		$this->select_default_post_format( $account_id, $account );
 
 		if ( ! $account['old_photos_imported'] ) {
-			$import_url = '?page=psmb_settings&psmb_import_instagram_account';
+			$import_url = '?page=psmb_settings&psmb_import_instagram_account=' . $account_id;
 
 			$old_photos_number = $account['imported_photo_ids'] ?
 				count( $account['photo_ids'] ) - count( $account['imported_photo_ids'] ) :
@@ -338,7 +381,7 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 			<?php endif; ?>
 			<?php if ( ! $account['old_photos_imported']
 				&& $old_photos_number ) : ?>
-				<a href="<?php echo esc_url( $import_url ); ?>" class="primary"style="float: right;"
+				<a href="<?php echo esc_url( $import_url ); ?>" class="primary" style="float: right;"
 					onclick="document.getElementById('import-instagram-spinner').className += ' is-active';">
 					<span class="spinner" id="import-instagram-spinner"></span>
 					<?php echo esc_html( sprintf(
@@ -364,29 +407,30 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 	 * @uses Premise_Social_Media_Blogger_Instagram
 	 * @uses Premise_Social_Media_Blogger_Instagram_CPT::insert_instagram_post()
 	 *
+	 * @param string $account_id Account ID.
+	 *
 	 * @return bool|array      Errors or false.
 	 */
-	private function import_old_instagram_photos() {
+	private function import_old_instagram_photos( $account_id = '' ) {
 
 		$instagram_options = $this->options['psmb_instagram'];
 
-		if ( ! $instagram_options['account'] ) {
+		if ( ! isset( $instagram_options[ 'account' . $account_id ] ) ||
+			! $instagram_options[ 'account' . $account_id ] ) {
 
 			return array( __( 'Instagram Account not found!', 'psmb' ) );
-
 		}
 
-		$account = $instagram_options['account'];
+		$account = $instagram_options[ 'account' . $account_id ];
 
 		if ( $account['old_photos_imported'] ) {
 
 			return array( __( 'Old photos already imported!', 'psmb' ) );
-
 		}
 
 		require_once PSMB_PATH . 'model/model-psmb-instagram.php';
 
-		$instagram_client = new Premise_Social_Media_Blogger_Instagram( $instagram_options['api_options'] );
+		$instagram_client = new Premise_Social_Media_Blogger_Instagram( $instagram_options[ 'api_options' . $account_id ] );
 
 		$photos = $instagram_client->get_account_photos( 50 );
 
@@ -420,7 +464,10 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 			// Get photo details.
 			$photo_details = $instagram_client->get_photo_details( $photo );
 
-			$post_type = $account['post_type'];
+			if ( 'psmb_instagram' === $account['post_type'] ) {
+
+				$post_type = 'psmb_instagram_' . (int) $account_id;
+			}
 
 			// Insert Instagram post.
 			$instagram_cpt->insert_instagram_post( $photo_details, $post_type );
@@ -436,7 +483,7 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 		// Save photo IDs!
 		$account['imported_photo_ids'] = $imported_photo_ids;
 
-		$instagram_options['account'] = $account;
+		$instagram_options[ 'account' . $account_id ] = $account;
 
 		update_option( 'psmb_instagram', $instagram_options );
 
@@ -450,15 +497,16 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 	 * Select default category
 	 * for each account.
 	 *
+	 * @param string $account_id Account ID.
 	 * @param  array $account Account details.
 	 */
-	private function select_default_category( $account ) {
+	private function select_default_category( $account_id, $account ) {
 
 		$category_taxonomy = 'category';
 
 		if ( 'post' !== $account['post_type'] ) {
 
-			$category_taxonomy = 'psmb_instagram-category';
+			$category_taxonomy = 'psmb_instagram_' . $account_id . '-category';
 		}
 
 		$category_options = array( __( 'No category', 'psmb' ) => '' );
@@ -472,7 +520,7 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 
 		// Select Category from already created categories, to override Photo category.
 		$select_attr = array(
-			'name'    => 'psmb_instagram[account][category_id]',
+			'name'    => 'psmb_instagram[account' . $account_id . '][category_id]',
 			'label'   => __( 'Category', 'psmb' ),
 			'class'   => 'span12',
 			'options' => $category_options,
@@ -488,9 +536,10 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 	/**
 	 * Select default post format
 	 *
+	 * @param string $account_id Account ID.
 	 * @param  array $account Account details.
 	 */
-	private function select_default_post_format( $account ) {
+	private function select_default_post_format( $account_id, $account ) {
 
 		$format_options = array(
 			__( 'Standard' ) => '',
@@ -507,7 +556,7 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 
 		// Select Post Format.
 		$select_attr = array(
-			'name'    => 'psmb_instagram[account][post_format]',
+			'name'    => 'psmb_instagram[account' . $account_id . '][post_format]',
 			'label'   => __( 'Post Format', 'psmb' ),
 			'class'   => 'span12',
 			'options' => $format_options,

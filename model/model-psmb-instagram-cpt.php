@@ -13,11 +13,29 @@
 class Premise_Social_Media_Blogger_Instagram_CPT {
 
 	/**
+	 * Instance ID.
+	 *
+	 * @var int
+	 */
+	public $instance_id;
+
+
+
+	/**
+	 * Account ID.
+	 *
+	 * @var string
+	 */
+	public $account_id;
+
+
+
+	/**
 	 * Instances.
 	 *
 	 * @var array
 	 */
-	private static $instance;
+	private static $instances = array();
 
 
 
@@ -26,23 +44,33 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 	 *
 	 * @var array
 	 */
-	public $post_type = array( 'psmb_instagram', 'post' );
+	public $post_type = array( 'psmb_instagram_', 'post' );
 
 
 
 	/**
 	 * Gets or create a new instance.
 	 *
-	 * @param string $title Name.
+	 * @param int    $instance_id   Instance ID.
+	 * @param string $account_title Account title.
 	 *
 	 * @return object
 	 */
-	public static function get_instance( $title = '' ) {
+	public static function get_instance( $instance_id, $account_title = '' ) {
 
-		null === self::$instance and self::$instance = new self( $title );
+		// Check if instance alreay created.
+		if ( isset( self::$instances[ (int) $instance_id ] )
+			&& self::$instances[ (int) $instance_id ] ) {
 
-		return self::$instance;
+			return self::$instances[ (int) $instance_id ];
+		}
+
+		self::$instances[ (int) $instance_id ] = new self( $instance_id, $account_title );
+
+		return self::$instances[ (int) $instance_id ];
 	}
+
+
 
 	/**
 	 * Constructor
@@ -51,16 +79,23 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 	 * Add meta box (@see add_meta_boxes)
 	 * Save meta box (@see do_save)
 	 *
-	 * @param string $title     Name.
-	 * @param sting  $post_type Post Type (only to specify if regular 'post').
+	 * @param int    $instance_id   Instance ID (for multiple Instagram CPTs!).
+	 * @param string $account_title Account title.
+	 * @param sting  $post_type     Post Type (only to specify if regular 'post').
 	 */
-	public function __construct( $title, $post_type = '' ) {
+	public function __construct( $instance_id, $account_title, $post_type = '' ) {
+
+		$this->instance_id = $instance_id;
+
+		$this->account_id = ( $this->instance_id ? (string) $this->instance_id : '' );
 
 		if ( 'post' !== $post_type ) {
 
-			if ( ! $title ) {
+			$this->post_type[0] .= $this->instance_id;
 
-				$title = 'Instagram';
+			if ( ! $account_title ) {
+
+				$account_title = 'Instagram';
 			}
 
 			if ( class_exists( 'PremiseCPT' ) ) {
@@ -77,10 +112,10 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 				 */
 				$ig_cpt = new PremiseCPT(
 					array(
-						'plural' => sprintf( __( '%s Photos', 'psmb' ), $title ),
-						'singular' => sprintf( __( '%s Photo', 'psmb' ), $title ),
-						'post_type_name' => 'psmb_instagram',
-						'slug' => 'psmb-instagram',
+						'plural' => sprintf( __( '%s Photos', 'psmb' ), $account_title ),
+						'singular' => sprintf( __( '%s Photo', 'psmb' ), $account_title ),
+						'post_type_name' => 'psmb_instagram_' . $this->instance_id,
+						'slug' => 'psmb-instagram_' . $this->instance_id,
 					),
 					array(
 						'supports' => array(
@@ -97,10 +132,10 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 
 				$ig_cpt->register_taxonomy(
 					array(
-						'taxonomy_name' => 'psmb_instagram-category',
+						'taxonomy_name' => 'psmb_instagram_' . $this->instance_id . '-category',
 						'singular' => __( 'Instagram Category', 'psmb' ),
 						'plural' => __( 'Instagram Categories', 'psmb' ),
-						'slug' => 'psmb-instagram-category',
+						'slug' => 'psmb-instagram-' . $this->instance_id . '-category',
 					),
 					array(
 						'hierarchical' => false, // No sub-categories.
@@ -109,10 +144,10 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 
 				$ig_cpt->register_taxonomy(
 					array(
-						'taxonomy_name' => 'psmb_instagram-tag',
+						'taxonomy_name' => 'psmb_instagram_' . $this->instance_id . '-tag',
 						'singular' => __( 'Instagram Tag', 'psmb' ),
 						'plural' => __( 'Instagram Tags', 'psmb' ),
-						'slug' => 'psmb-instagram-tag',
+						'slug' => 'psmb-instagram-' . $this->instance_id . '-tag',
 					),
 					array(
 						'hierarchical' => false, // No sub-tags.
@@ -160,6 +195,8 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 
 		if ( in_array( $post_type, $this->post_type )
 			&& $meta_exists ) {
+
+			$post_type = $post_type !== 'post' ? 'psmb_instagram_' . $this->instance_id : '';
 
 			add_meta_box(
 				'psmb-instagram-cpt-meta-box',
@@ -260,7 +297,7 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 
 		global $post;
 
-		if ( 'psmb_instagram' == $post->post_type ) {
+		if ( preg_match( '/^psmb_instagram_/', $post->post_type ) ) {
 
 			// Is template overridden in theme?
 			$new_template = locate_template( array( 'single-psmb-instagram.php' ) );
@@ -291,7 +328,7 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 
 		if ( ! $post_type ) {
 
-			$post_type = 'psmb_instagram';
+			$post_type = 'psmb_instagram_' . $this->instance_id;
 		}
 
 		// Regular Post: only description.
@@ -326,14 +363,14 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 		} else {
 
 			// Get post format.
-			$post_format = premise_get_option( 'psmb_instagram[account][post_format]' );
+			$post_format = premise_get_option( 'psmb_instagram[account' . $this->account_id . '][post_format]' );
 
 			set_post_format( $instagram_id, $post_format );
 
-			$tags_taxonomy = 'psmb_instagram-tag';
+			$tags_taxonomy = 'psmb_instagram-' . $this->instance_id . '-tag';
 
 			// No categories in Instagram!
-			$category_taxonomy = 'psmb_instagram-category';
+			$category_taxonomy = 'psmb_instagram-' . $this->instance_id . '-category';
 
 			if ( 'post' === $post_type  ) {
 
@@ -357,7 +394,7 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 
 			wp_set_post_terms( $instagram_id, $photo_details['tags'], $tags_taxonomy );
 
-			$account_category_id = premise_get_option( 'psmb_instagram[account][category_id]' );
+			$account_category_id = premise_get_option( 'psmb_instagram[account' . $this->account_id . '][category_id]' );
 
 			// Default Category?
 			if ( $account_category_id ) {
@@ -385,7 +422,7 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 	 */
 	protected function photo_has_excluded_tags( $photo_tags ) {
 		// Get excluded tags option.
-		$excluded_tags = premise_get_option( 'psmb_instagram[account][tags_exclude]' );
+		$excluded_tags = premise_get_option( 'psmb_instagram[account' . $this->account_id . '][tags_exclude]' );
 
 		if ( ! $excluded_tags ) {
 			return false;
