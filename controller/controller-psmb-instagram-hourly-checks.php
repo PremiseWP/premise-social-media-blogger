@@ -85,6 +85,8 @@ foreach ( (array) $instagram_account_ids as $account_id ) {
 			// Get photo details.
 			$photo_details = $instagram_client->get_photo_details( $photo );
 
+			$post_type = 'post';
+
 			if ( 'psmb_instagram' === $account['post_type'] ) {
 
 				$post_type = 'psmb_instagram_' . (int) $account_id;
