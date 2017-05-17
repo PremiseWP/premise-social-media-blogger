@@ -283,6 +283,9 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 		// Select default post format for each playlist.
 		$this->select_default_post_format( $playlist );
 
+		// Select default author for each playlist.
+		$this->select_default_post_author( $playlist );
+
 		if ( ! $playlist['old_videos_imported'] ) {
 			$import_url = '?page=psmb_settings&psmb_import_youtube_playlist=' .
 				$playlist_id;
@@ -385,6 +388,8 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 
 		$videos = $youtube_client->get_videos( $import_video_ids );
 
+		$post_author = $playlist['post_author'];
+
 		foreach ( (array) $videos as $video ) {
 			// Get video details.
 			$video_details = $youtube_client->get_video_details( $video );
@@ -397,7 +402,7 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 			}
 
 			// Insert YouTube post.
-			$youtube_cpt->insert_youtube_post( $video_details, $post_type );
+			$youtube_cpt->insert_youtube_post( $video_details, $post_type, $post_author );
 		}
 
 		if ( $youtube_client->errors ) {
@@ -486,6 +491,39 @@ class Premise_Social_Media_Blogger_Youtube_Settings extends Premise_Social_Media
 			'label'   => __( 'Post Format', 'psmb' ),
 			'class'   => 'span12',
 			'options' => $format_options,
+		);
+
+		premise_field(
+			'select',
+			$select_attr
+		);
+	}
+
+
+	/**
+	 * Select default post author
+	 * for each playlist.
+	 *
+	 * @param  array $playlist Playlist details.
+	 */
+	private function select_default_post_author( $playlist ) {
+
+		$authors = get_users( array(
+			'who' => 'authors',
+		) );
+
+		$author_options = array( '' => '' );
+
+		foreach ( (array) $authors as $author ) {
+			$author_options[ $authors[0]->display_name ] = $authors[0]->ID;
+		}
+
+		// Select Post Author.
+		$select_attr = array(
+			'name'    => 'psmb_youtube[playlists][' . $playlist['cpt_instance_id'] . '][post_author]',
+			'label'   => __( 'Post Author', 'psmb' ),
+			'class'   => 'span12',
+			'options' => $author_options,
 		);
 
 		premise_field(

@@ -321,10 +321,11 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 	 *
 	 * @param  array  $photo_details Photo details.
 	 * @param  string $post_type     Post type.
+	 * @param  int    $post_author   Post author ID.
 	 *
 	 * @return int                   Post ID or 0 on error.
 	 */
-	public function insert_instagram_post( $photo_details, $post_type = '' ) {
+	public function insert_instagram_post( $photo_details, $post_type = '', $post_author = '' ) {
 
 		if ( ! $post_type ) {
 
@@ -344,6 +345,7 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 		// Add Instagram video URL (in place of description) to post content for automatic embedding.
 		// Insert new Instagram post.
 		$instagram = array(
+			'post_author' => $post_author,
 			'post_title' => $photo_details['title'],
 			'post_status' => $post_status,
 			'post_date' => $photo_details['date'],

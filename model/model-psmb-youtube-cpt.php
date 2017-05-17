@@ -295,10 +295,11 @@ class Premise_Social_Media_Blogger_Youtube_CPT {
 	 *
 	 * @param  array  $video_details Video details.
 	 * @param  string $post_type     Post type.
+	 * @param  int    $post_author   Post author ID.
 	 *
 	 * @return int                   Post ID or 0 on error.
 	 */
-	public function insert_youtube_post( $video_details, $post_type = '' ) {
+	public function insert_youtube_post( $video_details, $post_type = '', $post_author = null ) {
 
 		if ( ! $post_type ) {
 
@@ -314,6 +315,7 @@ class Premise_Social_Media_Blogger_Youtube_CPT {
 
 		// Insert new Youtube post.
 		$youtube = array(
+			'post_author' => $post_author,
 			'post_title' => $video_details['title'],
 			'post_status' => 'publish',
 			'post_date' => $video_details['date'],

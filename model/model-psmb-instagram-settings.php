@@ -356,6 +356,9 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 		// Select default post format.
 		$this->select_default_post_format( $account_id, $account );
 
+		// Select default author.
+		$this->select_default_post_author( $account_id );
+
 		if ( ! $account['old_photos_imported'] ) {
 			$import_url = '?page=psmb_settings&psmb_import_instagram_account=' . $account_id;
 
@@ -454,6 +457,8 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 
 		$instagram_cpt = Premise_Social_Media_Blogger_Instagram_CPT::get_instance( $account['title'] );
 
+		$post_author = $account['post_author'];
+
 		foreach ( (array) $photos as $photo ) {
 
 			if ( ! in_array( $photo->id, $import_photo_ids ) ) {
@@ -470,7 +475,7 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 			}
 
 			// Insert Instagram post.
-			$instagram_cpt->insert_instagram_post( $photo_details, $post_type );
+			$instagram_cpt->insert_instagram_post( $photo_details, $post_type, $post_author );
 		}
 
 		if ( $instagram_client->errors ) {
@@ -566,4 +571,38 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 			'select',
 			$select_attr
 		);
-	}}
+	}
+
+
+	/**
+	 * Select default post author
+	 * for each playlist.
+	 *
+	 * @param string $account_id Account ID.
+	 */
+	private function select_default_post_author( $account_id, $account  ) {
+
+		$authors = get_users( array(
+			'who' => 'authors',
+		) );
+
+		$author_options = array( '' => '' );
+
+		foreach ( (array) $authors as $author ) {
+			$author_options[ $authors[0]->display_name ] = $authors[0]->ID;
+		}
+
+		// Select Post Author.
+		$select_attr = array(
+			'name'    => 'psmb_instagram[account' . $account_id . '][post_author]',
+			'label'   => __( 'Post Author', 'psmb' ),
+			'class'   => 'span12',
+			'options' => $author_options,
+		);
+
+		premise_field(
+			'select',
+			$select_attr
+		);
+	}
+}
