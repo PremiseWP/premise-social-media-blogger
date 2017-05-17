@@ -331,9 +331,8 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 			$post_type = 'psmb_instagram_' . $this->instance_id;
 		}
 
-		// Add Instagram video URL to post content for automatic embedding.
 		// Regular Post: only description.
-		$content = $photo_details['url'] . "\r\n" . $photo_details['description'];
+		$content = $photo_details['description'];
 
 		$post_status = 'publish';
 
@@ -342,6 +341,7 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 			$post_status = 'pending';
 		}
 
+		// Add Instagram video URL (in place of description) to post content for automatic embedding.
 		// Insert new Instagram post.
 		$instagram = array(
 			'post_title' => $photo_details['title'],
