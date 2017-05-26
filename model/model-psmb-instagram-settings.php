@@ -580,7 +580,7 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 	 *
 	 * @param string $account_id Account ID.
 	 */
-	private function select_default_post_author( $account_id, $account  ) {
+	private function select_default_post_author( $account_id  ) {
 
 		$authors = get_users( array(
 			'who' => 'authors',

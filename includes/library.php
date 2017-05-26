@@ -67,6 +67,66 @@ function psmb_generate_featured_image( $image_url, $post_id  ) {
 
 
 /**
+ * Upload image
+ *
+ * @param string $image_url Image URL.
+ *
+ * @return string Uploaded image file URL.
+ */
+function psmb_upload_image( $image_url, $post_id  ) {
+
+	if ( ! $image_url
+		|| ! $post_id ) {
+
+		return;
+	}
+
+	$upload_dir = wp_upload_dir();
+
+	$image_data = file_get_contents( $image_url );
+
+	// Fix: use post ID for unique filename.
+	$filename = $post_id . basename( $image_url );
+
+	// Remove URL arguments if any ?arg1=xxx.
+	if ( strpos( $filename, '?' ) !== false ) {
+
+		$filename = substr( $filename, 0, strpos( $filename, '?' ) );
+	}
+
+	if ( wp_mkdir_p( $upload_dir['path'] ) ) {
+
+		$file = $upload_dir['path'] . '/' . $filename;
+	} else {
+
+		$file = $upload_dir['basedir'] . '/' . $filename;
+	}
+
+	file_put_contents( $file, $image_data );
+
+	$wp_filetype = wp_check_filetype( $filename, null );
+
+	$attachment = array(
+		'post_mime_type' => $wp_filetype['type'],
+		'post_title' => sanitize_file_name( $filename ),
+		'post_content' => '',
+		'post_status' => 'inherit'
+	);
+
+	$attach_id = wp_insert_attachment( $attachment, $file, $post_id );
+
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+
+	$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
+
+	$res1 = wp_update_attachment_metadata( $attach_id, $attach_data );
+
+	return $upload_dir['url'] . '/' . $filename;
+}
+
+
+
+/**
  * Linkify
  * Transforms the URLs present in text to anchors tags
  *

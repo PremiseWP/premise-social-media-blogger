@@ -196,6 +196,7 @@ class Premise_Social_Media_Blogger_Instagram {
 			'embed_code' => '',
 			'likes' => array(),
 			'location' => '',
+			'additional_photos' => array(),
 		);
 
 		$photo_details['id'] = $photo->id;
@@ -244,6 +245,18 @@ class Premise_Social_Media_Blogger_Instagram {
 			$photo_details['description'] = $photo->videos->standard_resolution->url . "\n\r" . $photo_details['description'];
 
 			// error_log( json_encode( $photo ) );
+		} elseif ( $photo->type === 'carousel' ) {
+			// Multiple photos.
+			foreach ( (array) $photo->carousel_media as $other_photo ) {
+				if ( $other_photo->type === 'video' ) {
+
+					$photo_details['description'] = $other_photo->videos->standard_resolution->url . "\n\r" . $photo_details['description'];
+
+					continue;
+				}
+
+				$photo_details['additional_photos'][] = $other_photo->images->standard_resolution->url;
+			}
 		}
 
 		$photo_details['tags'] = $photo->tags;

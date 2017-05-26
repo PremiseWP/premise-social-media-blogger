@@ -407,6 +407,26 @@ class Premise_Social_Media_Blogger_Instagram_CPT {
 			}
 
 			psmb_generate_featured_image( $photo_details['thumbnail'], $instagram_id );
+
+			if ( $photo_details['additional_photos'] ) {
+
+				// Save eventual additional photos.
+				foreach ( (array) $photo_details['additional_photos'] as $additional_photo ) {
+
+					$additional_photo_url = psmb_upload_image( $additional_photo, $instagram_id );
+
+					$additional_photo_html = "\r\n\r\n" .
+						'<img src="' . $additional_photo_url . '" />';
+
+					$photo_details['description'] .= $additional_photo_html;
+				}
+
+				// Update post content.
+				wp_update_post( array(
+					'ID' => $instagram_id,
+					'post_content' => $photo_details['description'],
+				));
+			}
 		}
 
 		return $instagram_id;
