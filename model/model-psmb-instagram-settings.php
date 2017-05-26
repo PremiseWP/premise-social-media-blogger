@@ -472,6 +472,8 @@ class Premise_Social_Media_Blogger_Instagram_Settings extends Premise_Social_Med
 			if ( 'psmb_instagram' === $account['post_type'] ) {
 
 				$post_type = 'psmb_instagram_' . (int) $account_id;
+			} else {
+				$post_type = 'post';
 			}
 
 			// Insert Instagram post.

@@ -248,6 +248,11 @@ class Premise_Social_Media_Blogger_Instagram {
 		} elseif ( $photo->type === 'carousel' ) {
 			// Multiple photos.
 			foreach ( (array) $photo->carousel_media as $other_photo ) {
+				// Skip first photo.
+				if ( $index === 0 ) {
+					continue;
+				}
+
 				if ( $other_photo->type === 'video' ) {
 
 					$photo_details['description'] = $other_photo->videos->standard_resolution->url . "\n\r" . $photo_details['description'];
